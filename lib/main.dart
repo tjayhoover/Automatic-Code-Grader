@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'blocs/assignment_list/assignment_list_bloc.dart';
+import 'cubits/assignment_list/assignment_list_cubit.dart';
 
 import 'pages/login/login.dart';
 
 void main() {
   runApp(BlocProvider(
-    create: (BuildContext context) => AssignmentListBloc(),
+    create: (BuildContext context) => AssignmentListCubit(),
     child: MaterialApp(
       title: 'Code Grading Tool',
       theme: ThemeData(

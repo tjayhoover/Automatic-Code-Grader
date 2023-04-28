@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../blocs/assignment_list/assignment_list_bloc.dart';
+import 'package:project3_ui/cubits/assignment_list/assignment_list_cubit.dart';
 import '../../../states/assignment_state.dart';
 
 class AssignmentsView extends StatelessWidget {
@@ -12,7 +13,7 @@ class AssignmentsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Assignment List View')),
-      body: BlocBuilder<AssignmentListBloc, AssignmentState>(
+      body: BlocBuilder<AssignmentListCubit, AssignmentState>(
         builder: (context, state) {
           if (state is AssignmentsLoadedState) {
             return ListView.builder(
