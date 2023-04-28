@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'submit_assignment/submit_assignment.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project3_ui/blocs/assignment_list/assignment_list_bloc.dart';
+import 'submit_assignment/test_submit_assignment.dart';
 
 class StudentHome extends StatelessWidget {
   const StudentHome({super.key});
@@ -14,9 +16,11 @@ class StudentHome extends StatelessWidget {
         child: ElevatedButton(
           child: const Text('Submit Assignment'),
           onPressed: () {
+            var assignmentBloc = BlocProvider.of<AssignmentListBloc>(context);
+            assignmentBloc.add(LoadAssignments());
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const SubmissionPage()),
+              MaterialPageRoute(builder: (context) => const AssignmentsView()),
             );
           },
         ),
