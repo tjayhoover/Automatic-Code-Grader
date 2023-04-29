@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'blocs/assignment_list/assignment_list_bloc.dart';
-import 'cubits/assignment_list/assignment_list_cubit.dart';
+import 'cubits/assignments/assignments_cubit.dart';
 
 import 'pages/login/login.dart';
 

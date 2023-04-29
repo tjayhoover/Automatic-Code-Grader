@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project3_ui/blocs/assignment_list/assignment_list_bloc.dart';
-import 'package:project3_ui/cubits/assignment_list/assignment_list_cubit.dart';
-import 'submit_assignment/test_submit_assignment.dart';
+
+import 'package:project3_ui/cubits/assignments/assignments_cubit.dart';
+import 'submit_assignment/submit_assignment.dart';
 
 class StudentHome extends StatelessWidget {
   const StudentHome({super.key});
@@ -17,8 +17,6 @@ class StudentHome extends StatelessWidget {
         child: ElevatedButton(
           child: const Text('Submit Assignment'),
           onPressed: () {
-            //var assignmentBloc = BlocProvider.of<AssignmentListBloc>(context);
-            //assignmentBloc.add(LoadAssignments());
             var assignmentCubit = BlocProvider.of<AssignmentListCubit>(context);
             assignmentCubit.loadAssignments();
             Navigator.push(

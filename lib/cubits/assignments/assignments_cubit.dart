@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../entities/assignment.dart';
-import '../../states/assignment_state.dart';
-import '../../repositories/student/implementation/mock_student_repository.dart';
+import 'package:project3_ui/entities/assignment.dart';
+import 'package:project3_ui/cubits/states/assignment_state.dart';
+import 'package:project3_ui/repositories/assignments/implementation/mock_assignment_repository.dart';
 
 class AssignmentListCubit extends Cubit<AssignmentState> {
   AssignmentListCubit() : super(AssignmentInitialState());
@@ -17,7 +17,9 @@ class AssignmentListCubit extends Cubit<AssignmentState> {
     }
   }
 
-  final assignmentRepo = MockStudentRepo();
+  // This is bad and just for testing.
+  // Need to depend on an abstraction, not this concrete implementation.
+  final assignmentRepo = MockAssignmentRepository();
 
   // Query the assignment repo for the pending assignments
   Future<List<Assignment>> _fetchAssignments() async {
