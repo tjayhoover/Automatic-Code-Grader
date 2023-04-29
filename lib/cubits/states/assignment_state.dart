@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../entities/assignment.dart';
+import '../../entities/assignment.dart';
 
 abstract class AssignmentState extends Equatable {}
 
