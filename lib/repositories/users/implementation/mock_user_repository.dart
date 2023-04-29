@@ -1,7 +1,7 @@
 import 'package:project3_ui/repositories/users/interface/user_repository.dart';
 import 'package:project3_ui/entities/user.dart';
 
-class MockUserRepo implements UserRepository {
+class MockUserRepository implements UserRepository {
   @override
   List<User> getAllUsers() {
     List<User> userList = [
