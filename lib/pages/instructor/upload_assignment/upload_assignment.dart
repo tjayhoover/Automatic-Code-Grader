@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project3_ui/cubits/assignments/assignment_cubit.dart';
+import 'package:project3_ui/cubits/assignments/assignments_cubit.dart';
 
 import '../../../cubits/states/assignment_state.dart';
 
@@ -144,11 +144,6 @@ class UploadAssignmentState extends State<UploadAssignment> {
       if (state is AssignmentInitialState) {
         return buildTextFields(context);
       } else if (state is AssignmentFailureState) {
-        SnackBar errorSnackBar = SnackBar(
-          content: Text(
-              "Something went wrong. Make sure every field is filled out before submitting!"),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(errorSnackBar);
         return buildTextFields(context);
       } else if (state is AssignmentLoadingState) {
         return Dialog(
@@ -161,8 +156,16 @@ class UploadAssignmentState extends State<UploadAssignment> {
           ),
         );
       } else if (state is AssignmentLoadedState) {
-        return Text(
-            "This is where I would get popped back to the instructor home page!");
+        return ElevatedButton(
+          child: Text("Success! Return back to home"),
+          onPressed: () {
+            SnackBar snackBar = SnackBar(
+              content: Text("Assignment was uploaded!"),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            Navigator.pop(context);
+          },
+        );
       } else {
         return Container();
       }

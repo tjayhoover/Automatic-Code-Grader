@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:project3_ui/cubits/assignments/assignments_cubit.dart';
 import 'submit_assignment/submit_assignment.dart';
 
 class StudentHome extends StatelessWidget {
@@ -14,9 +17,11 @@ class StudentHome extends StatelessWidget {
         child: ElevatedButton(
           child: const Text('Submit Assignment'),
           onPressed: () {
+            var assignmentCubit = BlocProvider.of<AssignmentListCubit>(context);
+            assignmentCubit.loadAssignments();
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const SubmissionPage()),
+              MaterialPageRoute(builder: (context) => const AssignmentsView()),
             );
           },
         ),
