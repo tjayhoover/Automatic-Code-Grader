@@ -6,7 +6,7 @@ import 'student_grade_report_state.dart';
 class StudentGradeReport extends Cubit<StudentGradeReportState> {
   StudentGradeReport() : super(StudentGradeReportInitialState());
 
-  void ReportRequested() {
+  void reportRequested() {
     emit(StudentGradeReportLoadingState());
     //load reports from server
     bool success = true;
