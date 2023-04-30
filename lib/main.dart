@@ -18,7 +18,7 @@ void main() {
           primarySwatch: Colors.blue,
           inputDecorationTheme:
               const InputDecorationTheme(border: OutlineInputBorder())),
-      home: UploadAssignment(),
+      home: LogInPage(),
     ),
   ));
 }
