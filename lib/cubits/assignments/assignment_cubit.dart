@@ -1,14 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project3_ui/repositories/instructor/implementation/mock_instructor_repository.dart';
-import 'package:project3_ui/repositories/instructor/interface/intructor_repository.dart';
+import 'package:project3_ui/repositories/assignments/implementation/mock_assignment_repository.dart';
 
-import '../entities/assignment.dart';
-import 'assignment_state.dart';
+import '../../entities/assignment.dart';
+import '../states/assignment_state.dart';
 
-class AssignmentCubit extends Cubit<AssignmentState> {
-  AssignmentCubit() : super(AssignmentInitialState());
+class UploadAssignmentCubit extends Cubit<AssignmentState> {
+  MockAssignmentRepository repo = MockAssignmentRepository();
 
-  MockInstructorRepo repo = MockInstructorRepo();
+  UploadAssignmentCubit() : super(AssignmentInitialState());
 
   Future<void> uploadAssignment(String name, DateTime dueDate, String desc,
       List<String> inputs, List<String> outputs) async {

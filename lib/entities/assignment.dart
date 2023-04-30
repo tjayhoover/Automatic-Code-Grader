@@ -6,8 +6,8 @@ class Assignment {
   late List<String> inputs;
   late List<String> outputs;
 
-  Assignment(this.id, this.name, this.dueDate, this.desc, this.inputs,
-      {this.outputs = const []});
+  Assignment(this.id, this.name, this.dueDate, this.desc,
+      {this.inputs = const [], this.outputs = const []});
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -23,7 +23,7 @@ class Assignment {
     name = json['name'];
     dueDate = json['dueDate'];
     desc = json['desc'];
-    inputs = json['inputFiles'];
+    inputs = json['inputFiles'] ?? [];
     outputs = json['outputFiles'] ?? [];
   }
 }

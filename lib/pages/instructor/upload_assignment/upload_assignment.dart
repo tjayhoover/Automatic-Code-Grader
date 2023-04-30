@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project3_ui/cubits/assignment_cubit.dart';
+import 'package:project3_ui/cubits/assignments/assignment_cubit.dart';
 
-import '../../../cubits/assignment_state.dart';
+import '../../../cubits/states/assignment_state.dart';
 
 class UploadAssignment extends StatefulWidget {
   UploadAssignmentState createState() {
@@ -79,7 +79,7 @@ class UploadAssignmentState extends State<UploadAssignment> {
             onPressed: () {
               DateTime dueDate = DateTime(
                   date.year, date.month, date.day, time.hour, time.minute);
-              BlocProvider.of<AssignmentCubit>(context).uploadAssignment(
+              BlocProvider.of<UploadAssignmentCubit>(context).uploadAssignment(
                   nameController.text,
                   dueDate,
                   descController.text,
@@ -139,7 +139,7 @@ class UploadAssignmentState extends State<UploadAssignment> {
   }
 
   Widget buildBlocBuilder(BuildContext context) {
-    return BlocBuilder<AssignmentCubit, AssignmentState>(
+    return BlocBuilder<UploadAssignmentCubit, AssignmentState>(
         builder: (context, state) {
       if (state is AssignmentInitialState) {
         return buildTextFields(context);
