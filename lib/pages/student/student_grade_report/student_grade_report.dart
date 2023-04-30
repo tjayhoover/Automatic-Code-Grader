@@ -11,26 +11,29 @@ class StudentGradeReportPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<StudentGradeReport, StudentGradeReportState>(
-      builder: (context, state) {
-        if (state is StudentGradeReportInitialState) {
+    return Scaffold(
+      appBar: AppBar(title:const Text("Grade Report")),
+      body: BlocBuilder<StudentGradeReport, StudentGradeReportState>(
+        builder: (context, state) {
+          if (state is StudentGradeReportInitialState) {
+            return Container();
+          } else if (state is StudentGradeReportLoadingState) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is StudentGradeReportLoadedState) {
+            return ListView.builder(
+              padding: const EdgeInsets.all(10),
+              itemCount: state.reports.length,
+              itemBuilder: (context, index) =>
+                  gradeReportItem(state.reports[index]),
+            );
+          } else if (state is StudentGradeReportFailureState) {
+            return const Center(
+              child: Text("ERROR"),
+            );
+          }
           return Container();
-        } else if (state is StudentGradeReportLoadingState) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (state is StudentGradeReportLoadedState) {
-          return ListView.builder(
-            padding: const EdgeInsets.all(10),
-            itemCount: state.reports.length,
-            itemBuilder: (context, index) =>
-                gradeReportItem(state.reports[index]),
-          );
-        } else if (state is StudentGradeReportFailureState) {
-          return const Center(
-            child: Text("ERROR"),
-          );
-        }
-        return Container();
-      },
+        },
+      ),
     );
   }
 
