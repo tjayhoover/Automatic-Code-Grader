@@ -14,6 +14,10 @@ void main() {
     ],
     child: MaterialApp(
       title: 'Navigation Basics',
+      theme: ThemeData(
+          primarySwatch: Colors.blue,
+          inputDecorationTheme:
+              const InputDecorationTheme(border: OutlineInputBorder())),
       home: UploadAssignment(),
     ),
   ));
