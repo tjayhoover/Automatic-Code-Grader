@@ -9,6 +9,26 @@ class UserInitialState extends UserState {
   List<Object?> get props => [];
 }
 
+class UserDeletedState extends UserState {
+  @override
+  List<Object?> get props => [];
+}
+
+class UserDeleteFailureState extends UserState {
+  @override
+  List<Object?> get props => [];
+}
+
+class UserCreatedState extends UserState {
+  @override
+  List<Object?> get props => [];
+}
+
+class UserCreateFailureState extends UserState {
+  @override
+  List<Object?> get props => [];
+}
+
 class UserLoadingState extends UserState {
   @override
   // TODO: implement props
