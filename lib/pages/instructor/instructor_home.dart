@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project3_ui/cubits/assignments/assignments_cubit.dart';
 
 import '../instructor/upload_assignment/upload_assignment.dart';
 import '../instructor/grade_report/grade_report.dart';
@@ -18,10 +20,10 @@ class InstructorHome extends StatelessWidget {
           ElevatedButton(
             child: const Text('Upload Assignment'),
             onPressed: () {
+              BlocProvider.of<UploadAssignmentCubit>(context).resetState();
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => const InstructorUploadAssignment()),
+                MaterialPageRoute(builder: (context) => UploadAssignment()),
               );
             },
           ),
