@@ -10,7 +10,10 @@ class StudentGradeReport extends Cubit<StudentGradeReportState> {
     emit(StudentGradeReportLoadingState());
     //load reports from server
     bool success = true;
-    List<GradeReport> reports = [];
+    List<GradeReport> reports = [
+      GradeReport(
+          5, "Test Grade Report", DateTime.now(), DateTime.now(), "hehe", 5, 15)
+    ];
     if (success)
       emit(StudentGradeReportLoadedState(reports));
     else
