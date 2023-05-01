@@ -9,7 +9,9 @@ void main() {
     providers: [
       BlocProvider(create: (BuildContext context) => AssignmentListCubit()),
       BlocProvider(create: (BuildContext context) => UserListCubit()),
-      BlocProvider(create: (BuildContext context) => UploadAssignmentCubit())
+      BlocProvider(create: (BuildContext context) => UploadAssignmentCubit()),
+      BlocProvider(create: (BuildContext context) => UserDeleteCubit()),
+      BlocProvider(create: (BuildContext context) => UserCreateCubit()),
     ],
     child: MaterialApp(
       title: 'Code Grading Tool',
