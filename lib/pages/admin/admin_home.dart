@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../cubits/users/users_cubit.dart';
+import 'add_user/add_user.dart';
+import 'delete_user/delete_user.dart';
 
 class AdminHome extends StatelessWidget {
   const AdminHome({super.key});
@@ -11,14 +14,31 @@ class AdminHome extends StatelessWidget {
         title: const Text('Admin Dashboard'),
       ),
       body: Center(
-        child: ElevatedButton(
-          child: const Text('Add User'),
-          onPressed: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => const SubmissionPage()),
-            // );
-          },
+        child: Column(
+          children: [
+            ElevatedButton(
+              child: const Text('Add User'),
+              onPressed: () {
+                var Cubit = BlocProvider.of<UserCreateCubit>(context);
+                Cubit.ResetState();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddUser()),
+                );
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Delete User'),
+              onPressed: () {
+                var Cubit = BlocProvider.of<UserDeleteCubit>(context);
+                Cubit.ResetState();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DelUser()),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
