@@ -39,6 +39,7 @@ dependencies:
   equatable: ^2.0.5
   filesystem_picker: ^3.1.0
   file_picker: ^5.2.11
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
