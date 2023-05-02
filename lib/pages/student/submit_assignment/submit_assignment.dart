@@ -25,7 +25,6 @@ class AssignmentsView extends StatelessWidget {
                   itemCount: state.assignments.length,
                   itemBuilder: (context, index) {
                     final assignment = state.assignments[index];
-
                     return ListTile(
                       onTap: () {
                         Navigator.push(

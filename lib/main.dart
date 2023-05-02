@@ -14,6 +14,7 @@ void main() {
       BlocProvider(create: (BuildContext context) => UserDeleteCubit()),
       BlocProvider(create: (BuildContext context) => UserCreateCubit()),
       BlocProvider(create: (BuildContext context) => StudentGradeReport()),
+      BlocProvider(create: (BuildContext context) => SubmissionCubit()),
     ],
     child: MaterialApp(
       title: 'Code Grading Tool',
