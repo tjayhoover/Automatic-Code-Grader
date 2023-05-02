@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project3_ui/cubits/student_grade_report_cubit.dart';
+import 'package:project3_ui/cubits/grade_reports/student_grade_report_cubit.dart';
 import 'package:project3_ui/entities/grade_report.dart';
-import '../../../cubits/student_grade_report_state.dart';
+import '../../../cubits/states/student_grade_report_state.dart';
 
 class StudentGradeReportPage extends StatelessWidget {
   const StudentGradeReportPage({super.key});

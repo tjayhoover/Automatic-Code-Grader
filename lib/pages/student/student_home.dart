@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project3_ui/pages/student/student_grade_report/student_grade_report.dart';
 import 'package:project3_ui/cubits/assignments/assignments_cubit.dart';
 import 'submit_assignment/submit_assignment.dart';
-import 'package:project3_ui/cubits/student_grade_report_cubit.dart';
+import 'package:project3_ui/cubits/grade_reports/student_grade_report_cubit.dart';
 
 class StudentHome extends StatelessWidget {
   const StudentHome({super.key});
