@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project3_ui/cubits/student_grade_report_cubit.dart';
+import 'package:project3_ui/cubits/grade_reports/student_grade_report_cubit.dart';
 import 'package:project3_ui/entities/grade_report.dart';
-import '../../../cubits/student_grade_report_state.dart';
+import '../../../cubits/states/student_grade_report_state.dart';
 
 class StudentGradeReportPage extends StatelessWidget {
   const StudentGradeReportPage({super.key});
@@ -12,7 +12,7 @@ class StudentGradeReportPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:const Text("Grade Report")),
+      appBar: AppBar(title: const Text("Grade Report")),
       body: BlocBuilder<StudentGradeReport, StudentGradeReportState>(
         builder: (context, state) {
           if (state is StudentGradeReportInitialState) {
@@ -21,7 +21,7 @@ class StudentGradeReportPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else if (state is StudentGradeReportLoadedState) {
             return ListView.builder(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(25),
               itemCount: state.reports.length,
               itemBuilder: (context, index) =>
                   gradeReportItem(state.reports[index]),
@@ -38,8 +38,11 @@ class StudentGradeReportPage extends StatelessWidget {
   }
 
   gradeReportItem(GradeReport report) {
-    return Container(
-      child: Text(report.name),
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text('${report.name} ${report.casesPassed} out of ${report.totalCases}'),
+      ),
     );
   }
 }
