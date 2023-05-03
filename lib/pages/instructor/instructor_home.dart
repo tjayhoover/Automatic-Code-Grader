@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project3_ui/cubits/assignments/assignments_cubit.dart';
+import 'package:project3_ui/cubits/grade_reports/instructor_grade_report_cubit.dart';
 
 import '../instructor/upload_assignment/upload_assignment.dart';
 import '../instructor/grade_report/grade_report.dart';
@@ -30,10 +31,11 @@ class InstructorHome extends StatelessWidget {
           ElevatedButton(
             child: const Text('View Assignment Grades'),
             onPressed: () {
+              BlocProvider.of<InstructorGradeReport>(context).loadReport();
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const InstructorGradeReport()),
+                    builder: (context) => const InstructorGradeReportWidget()),
               );
             },
           ),

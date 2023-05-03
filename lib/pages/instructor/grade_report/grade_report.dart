@@ -1,31 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project3_ui/cubits/grade_reports/instructor_grade_report_cubit.dart';
+import 'package:project3_ui/cubits/states/instructor_grade_report_states.dart';
 
-class InstructorGradeReport extends StatelessWidget {
-  const InstructorGradeReport({super.key});
+class InstructorGradeReportWidget extends StatelessWidget {
+  const InstructorGradeReportWidget({super.key});
   static const String _title = 'Assignment Grade Reports';
-  static const List<String> _studentNames = <String>[
-    'Alice',
-    'Bobby',
-    'Charlie',
-    'Doug',
-    'Eve',
-  ];
-  static const List<String> _assignmentNames = <String>[
-    'Hello World!',
-    'Add Two Numbers',
-    'Beekeeper',
-    'Volim',
-    'Steal Tyler\'s Internship',
-  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text(_title)),
-      body: const GradeReportStatefulWidget(
-        studentNames: _studentNames,
-        assignmentNames: _assignmentNames,
-      ),
+      body: BlocBuilder<InstructorGradeReport, InstructorGradeReportState>(
+          builder: (context, state) {
+        if (state is InstructorGradeReportLoadingState) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state is InstructorGradeReportLoadedState) {
+          return GradeReportStatefulWidget(
+            studentNames:
+                state.gradeReportList.map((e) => e.studentName).toList(),
+            assignmentNames: state.assignmentNames,
+          );
+        } else if (state is InstructorGradeReportFailureState) {
+          return const Center(
+            child: Text("Error. Please contact your system administrator."),
+          );
+        }
+        // Default return
+        return Container();
+      }),
     );
   }
 }
@@ -55,7 +60,7 @@ class _GradeReportState extends State<GradeReportStatefulWidget> {
       itemBuilder: (_, int aIndex) {
         return ExpansionTile(
           title: Text(widget.assignmentNames[aIndex]),
-          subtitle: const Text('avg: x\tmin: y\tmax:  z'),
+          subtitle: const Text('stats go here'),
           children: <Widget>[
             ListView.builder(
               shrinkWrap: true,

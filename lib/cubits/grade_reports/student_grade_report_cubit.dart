@@ -7,6 +7,7 @@ import '../../repositories/student_grade_reports/implementation/mock_sgr_reposit
 import '../states/student_grade_report_state.dart';
 
 class StudentGradeReport extends Cubit<StudentGradeReportState> {
+
   late StudentGradeReportRepository repo;
 
   StudentGradeReport() : super(StudentGradeReportInitialState()) {
