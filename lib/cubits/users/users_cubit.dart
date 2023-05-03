@@ -36,6 +36,7 @@ class UserCreateCubit extends Cubit<UserState> {
     try {
       emit(UserLoadingState());
       final users = await _createUser(username, role);
+      if(!users) throw Null;
       emit(UserCreatedState());
     } catch (e) {
       emit(UserCreateFailureState());
@@ -64,6 +65,7 @@ class UserDeleteCubit extends Cubit<UserState> {
     try {
       emit(UserLoadingState());
       final success = await _deleteUser(username);
+      if(!success) throw Null;
       emit(UserDeletedState());
     } catch (e) {
       emit(UserDeleteFailureState());

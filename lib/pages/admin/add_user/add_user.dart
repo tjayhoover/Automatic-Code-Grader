@@ -22,7 +22,7 @@ class AddUser extends StatelessWidget {
           return const CircularProgressIndicator();
         } else if (state is UserCreateFailureState) {
           // add error handling later
-          return Main(username: username, role: role);
+          return const ErrorPage();
         } else if (state is UserCreatedState) {
           return Center(
               child: ElevatedButton(
@@ -34,6 +34,20 @@ class AddUser extends StatelessWidget {
           return Container();
         }
       }),
+    );
+  }
+}
+
+class ErrorPage extends StatelessWidget {
+  const ErrorPage({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const AlertDialog(
+      title: Text('Error'),
+      content: Text('User not created! Try again'),
     );
   }
 }
