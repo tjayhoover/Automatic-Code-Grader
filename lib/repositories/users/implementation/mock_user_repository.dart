@@ -12,10 +12,12 @@ class MockUserRepository implements UserRepository {
     return userList;
   }
 
+  @override
   bool createUser(String username, String role) {
     return true;
   }
 
+  @override
   bool deleteUser(String user) {
     return true;
   }
