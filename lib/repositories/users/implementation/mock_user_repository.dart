@@ -11,4 +11,12 @@ class MockUserRepository implements UserRepository {
     ];
     return userList;
   }
+
+  bool createUser(String username, String role) {
+    return true;
+  }
+
+  bool deleteUser(String user) {
+    return true;
+  }
 }

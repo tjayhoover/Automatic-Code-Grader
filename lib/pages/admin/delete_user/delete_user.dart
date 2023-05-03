@@ -70,7 +70,7 @@ class Main extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               BlocProvider.of<UserDeleteCubit>(context)
-                  .DeleteUser(username.text);
+                  .deleteUser(username.text);
             },
             child: const Text('Delete User'),
           ),

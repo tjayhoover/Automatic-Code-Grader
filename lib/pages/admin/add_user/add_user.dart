@@ -87,7 +87,7 @@ class Main extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   BlocProvider.of<UserCreateCubit>(context)
-                      .CreateUser(username.text, role.text);
+                      .createUser(username.text, role.text);
                 },
                 child: const Text('Add User'),
               ),
