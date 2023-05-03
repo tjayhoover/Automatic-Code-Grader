@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../entities/grade_report.dart';
+import '../../entities/grade_report.dart';
 
 abstract class StudentGradeReportState extends Equatable {}
 
