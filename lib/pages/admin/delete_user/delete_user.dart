@@ -22,7 +22,7 @@ class DelUser extends StatelessWidget {
           return const CircularProgressIndicator();
         } else if (state is UserDeleteFailureState) {
           // add error message later
-          return Main(username: username);
+          return const ErrorPage();
         } else if (state is UserDeletedState) {
           return Center(
               child: ElevatedButton(
@@ -35,6 +35,19 @@ class DelUser extends StatelessWidget {
         }
       }),
     );
+  }
+}
+
+class ErrorPage extends StatelessWidget {
+  const ErrorPage({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const AlertDialog(
+    title: Text('Error'),
+    content: Text('User not deleted! Try again'),);
   }
 }
 
@@ -70,7 +83,7 @@ class Main extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               BlocProvider.of<UserDeleteCubit>(context)
-                  .DeleteUser(username.text);
+                  .deleteUser(username.text);
             },
             child: const Text('Delete User'),
           ),

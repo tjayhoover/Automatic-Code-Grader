@@ -20,7 +20,7 @@ class AdminHome extends StatelessWidget {
               child: const Text('Add User'),
               onPressed: () {
                 var Cubit = BlocProvider.of<UserCreateCubit>(context);
-                Cubit.ResetState();
+                Cubit.resetState();
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => AddUser()),
@@ -31,7 +31,7 @@ class AdminHome extends StatelessWidget {
               child: const Text('Delete User'),
               onPressed: () {
                 var Cubit = BlocProvider.of<UserDeleteCubit>(context);
-                Cubit.ResetState();
+                Cubit.resetState();
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => DelUser()),

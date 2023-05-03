@@ -32,55 +32,57 @@ class UserListCubit extends Cubit<UserState> {
 class UserCreateCubit extends Cubit<UserState> {
   UserCreateCubit() : super(UserInitialState());
 
-  void CreateUser(String username, String role) async {
+  void createUser(String username, String role) async {
     try {
       emit(UserLoadingState());
-      final users = await _CreateUser(username, role);
+      final users = await _createUser(username, role);
+      if(!users) throw Null;
       emit(UserCreatedState());
     } catch (e) {
       emit(UserCreateFailureState());
     }
   }
 
-  void ResetState() {
+  void resetState() {
     emit(UserInitialState());
   }
 
   // This is bad and just for testing.
   // Need to depend on an abstraction, not this concrete implementation.
-  //final userRepo = MockUserRepository();
+  final userRepo = MockUserRepository();
 
   // Query the assignment repo for the pending assignments
-  Future<bool> _CreateUser(String username, String role) async {
+  Future<bool> _createUser(String username, String role) async {
     // TODO: Implement fetching of assignments from API or database
-    return true;
+    return userRepo.createUser(username, role);
   }
 }
 
 class UserDeleteCubit extends Cubit<UserState> {
   UserDeleteCubit() : super(UserInitialState());
 
-  void DeleteUser(String username) async {
+  void deleteUser(String username) async {
     try {
       emit(UserLoadingState());
-      final success = await _DeleteUser(username);
+      final success = await _deleteUser(username);
+      if(!success) throw Null;
       emit(UserDeletedState());
     } catch (e) {
       emit(UserDeleteFailureState());
     }
   }
 
-  void ResetState() {
+  void resetState() {
     emit(UserInitialState());
   }
 
   // This is bad and just for testing.
   // Need to depend on an abstraction, not this concrete implementation.
-  //final userRepo = MockUserRepository();
+  final userRepo = MockUserRepository();
 
   // Query the assignment repo for the pending assignments
-  Future<bool> _DeleteUser(String username) async {
+  Future<bool> _deleteUser(String username) async {
     // TODO: Implement fetching of assignments from API or database
-    return true;
+    return userRepo.deleteUser(username);
   }
 }
