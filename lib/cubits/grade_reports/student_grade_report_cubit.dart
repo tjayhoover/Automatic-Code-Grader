@@ -6,11 +6,11 @@ import '../../repositories/student_grade_reports/implementation/mock_sgr_reposit
 import '../states/student_grade_report_state.dart';
 
 class StudentGradeReport extends Cubit<StudentGradeReportState> {
-  StudentGradeReportRepository repo=MockSgrRepository();
+  StudentGradeReportRepository repo = MockSgrRepository();
 
   StudentGradeReport() : super(StudentGradeReportInitialState());
 
-  void reportRequested() async{
+  void reportRequested() async {
     emit(StudentGradeReportLoadingState());
     //load reports from server
     bool success = true;
