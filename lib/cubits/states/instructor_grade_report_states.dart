@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:project3_ui/entities/grade_report.dart';
+import 'package:project3_ui/entities/assignment_grade_report.dart';
 
 abstract class InstructorGradeReportState extends Equatable {}
 
@@ -9,14 +9,16 @@ class InstructorGradeReportLoadingState extends InstructorGradeReportState {
 }
 
 class InstructorGradeReportLoadedState extends InstructorGradeReportState {
-  final List<GradeReport> gradeReportList;
-  InstructorGradeReportLoadedState(this.gradeReportList);
+  final List<String> assignmentNames;
+  final List<AssignmentGradeReport> gradeReportList;
+  InstructorGradeReportLoadedState(this.assignmentNames, this.gradeReportList);
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [assignmentNames, gradeReportList];
 }
 
 class InstructorGradeReportFailureState extends InstructorGradeReportState {
   @override
-  List<Object?> get props => [];
+  // TODO: Is this a decent way of checking whether the state exists?
+  List<Object?> get props => [false];
 }
