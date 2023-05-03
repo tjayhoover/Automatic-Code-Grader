@@ -2,13 +2,17 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:project3_ui/entities/assignment.dart';
+import 'package:project3_ui/main.dart';
 import 'package:project3_ui/cubits/states/assignment_state.dart';
 import 'package:project3_ui/repositories/assignments/implementation/mock_assignment_repository.dart';
+import 'package:project3_ui/repositories/assignments/interface/assignment_repository.dart';
 
 class UploadAssignmentCubit extends Cubit<AssignmentState> {
-  MockAssignmentRepository repo = MockAssignmentRepository();
+  late AssignmentRepository repo;
 
-  UploadAssignmentCubit() : super(AssignmentInitialState());
+  UploadAssignmentCubit() : super(AssignmentInitialState()) {
+    repo = getIt<AssignmentRepository>();
+  }
 
   Future<void> uploadAssignment(String name, DateTime dueDate, String desc,
       List<String> inputs, List<String> outputs) async {
