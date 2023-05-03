@@ -139,8 +139,16 @@ class UploadAssignmentState extends State<UploadAssignment> {
   }
 
   Widget buildBlocBuilder(BuildContext context) {
-    return BlocBuilder<UploadAssignmentCubit, AssignmentState>(
-        builder: (context, state) {
+    return BlocConsumer<UploadAssignmentCubit, AssignmentState>(
+        listener: (context, state) {
+      if (state is AssignmentLoadedState) {
+        SnackBar snackBar = SnackBar(
+          content: Text("Assignment was uploaded!"),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        Navigator.pop(context);
+      }
+    }, builder: (context, state) {
       if (state is AssignmentInitialState) {
         return buildTextFields(context);
       } else if (state is AssignmentFailureState) {
@@ -154,17 +162,6 @@ class UploadAssignmentState extends State<UploadAssignment> {
               CircularProgressIndicator(),
             ],
           ),
-        );
-      } else if (state is AssignmentLoadedState) {
-        return ElevatedButton(
-          child: Text("Success! Return back to home"),
-          onPressed: () {
-            SnackBar snackBar = SnackBar(
-              content: Text("Assignment was uploaded!"),
-            );
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            Navigator.pop(context);
-          },
         );
       } else {
         return Container();
