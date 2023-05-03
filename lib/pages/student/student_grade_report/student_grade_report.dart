@@ -41,7 +41,8 @@ class StudentGradeReportPage extends StatelessWidget {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text('${report.name} ${report.casesPassed} out of ${report.totalCases}'),
+        child: Text(
+            '${report.name} ${report.casesPassed} out of ${report.totalCases}'),
       ),
     );
   }
