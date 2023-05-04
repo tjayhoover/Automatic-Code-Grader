@@ -10,6 +10,7 @@ import 'package:project3_ui/repositories/student_grade_reports/implementation/mo
 import 'package:project3_ui/repositories/student_grade_reports/interface/student_grade_reports_repository.dart';
 import 'package:project3_ui/repositories/users/implementation/mock_user_repository.dart';
 import 'package:project3_ui/repositories/users/interface/user_repository.dart';
+import 'package:project3_ui/cubits/grade_reports/instructor_grade_report_cubit.dart';
 
 import 'pages/login/login.dart';
 
