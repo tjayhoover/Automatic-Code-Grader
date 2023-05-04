@@ -3,11 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project3_ui/cubits/users/users_cubit.dart';
 
 import '../../../cubits/states/user_state.dart';
+import '../../../entities/user.dart';
 
 class DelUser extends StatelessWidget {
   DelUser({super.key});
-
-  final TextEditingController username = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +16,9 @@ class DelUser extends StatelessWidget {
       ),
       body: BlocBuilder<UserDeleteCubit, UserState>(builder: (context, state) {
         if (state is UserInitialState) {
-          return Main(username: username);
+          return const CircularProgressIndicator();
+        } else if (state is UsersLoadedState) {
+          return Main(users: state.users);
         } else if (state is UserLoadingState) {
           return const CircularProgressIndicator();
         } else if (state is UserDeleteFailureState) {
@@ -46,23 +47,64 @@ class ErrorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const AlertDialog(
-    title: Text('Error'),
-    content: Text('User not deleted! Try again'),);
+      title: Text('Error'),
+      content: Text('User not deleted! Try again'),
+    );
   }
 }
 
-class Main extends StatelessWidget {
+class Main extends StatefulWidget {
   const Main({
     super.key,
-    required this.username,
+    required this.users,
   });
 
-  final TextEditingController username;
+  final List<User> users;
+
+  @override
+  State<Main> createState() => _Main();
+}
+
+class _Main extends State<Main> {
+  Widget build(BuildContext context) {
+    return Center(
+        child: ListView.separated(
+      //padding: const EdgeInsets.all(12.0),
+      itemCount: widget.users.length,
+      itemBuilder: (_, int aIndex) {
+        return ListTile(
+          trailing: DeleteButton(id: widget.users[aIndex].id.toString()),
+          title: Text(widget.users[aIndex].name),
+        );
+      },
+      separatorBuilder: (BuildContext context, int index) => const Divider(),
+    ));
+
+    ////
+  }
+}
+
+class DeleteButton extends StatelessWidget {
+  const DeleteButton({
+    super.key,
+    required this.id,
+  });
+
+  final String id;
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
+    return ElevatedButton(
+      onPressed: () {
+        BlocProvider.of<UserDeleteCubit>(context).deleteUser(id);
+      },
+      child: const Text('Delete User'),
+    );
+  }
+}
+
+/*
+child: Column(
         children: [
           const Text(
             style: TextStyle(fontSize: 30),
@@ -80,15 +122,7 @@ class Main extends StatelessWidget {
               hintText: 'Username',
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              BlocProvider.of<UserDeleteCubit>(context)
-                  .deleteUser(username.text);
-            },
-            child: const Text('Delete User'),
-          ),
         ],
       ),
     );
-  }
-}
+*/

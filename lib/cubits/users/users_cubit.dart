@@ -76,6 +76,17 @@ class UserDeleteCubit extends Cubit<UserState> {
     }
   }
 
+  void getAllUsers() async{
+    try {
+      emit(UserLoadingState());
+      final list = await _getAllUsers();
+      if (list.isEmpty) throw Null;
+      emit(UsersLoadedState(list));
+    } catch (e) {
+      emit(UsersFailureState());
+    }
+  }
+
   void resetState() {
     emit(UserInitialState());
   }
@@ -88,5 +99,9 @@ class UserDeleteCubit extends Cubit<UserState> {
   Future<bool> _deleteUser(String username) async {
     // TODO: Implement fetching of assignments from API or database
     return userRepo.deleteUser(username);
+  }
+
+  Future<List<User>> _getAllUsers() async{
+      return userRepo.getAllUsers();
   }
 }
