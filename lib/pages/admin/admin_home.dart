@@ -32,6 +32,7 @@ class AdminHome extends StatelessWidget {
               onPressed: () {
                 var Cubit = BlocProvider.of<UserDeleteCubit>(context);
                 Cubit.resetState();
+                Cubit.getAllUsers();
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => DelUser()),
