@@ -14,38 +14,46 @@ class AssignmentsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Pending Assignments')),
-      body: SizedBox(
-        width: 1000,
-        height: 1000,
-        child: Center(
-          child: BlocBuilder<AssignmentListCubit, AssignmentState>(
-            builder: (context, state) {
-              if (state is AssignmentsLoadedState) {
-                return ListView.builder(
-                  itemCount: state.assignments.length,
-                  itemBuilder: (context, index) {
-                    final assignment = state.assignments[index];
-
-                    return ListTile(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  AssignmentView(assignment: assignment)),
-                        );
-                      },
-                      title: Text(assignment.name),
-                      subtitle: Text(
-                          "Due: ${DateFormat.yMMMd().format(assignment.dueDate)}"),
-                    );
-                  },
-                );
-              }
-              return const CircularProgressIndicator();
-            },
+      body: Column(
+        children: [
+          const Padding(
+            padding: EdgeInsets.all(14.0),
+            child: Text(
+              'Pending Assignments',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+            ),
           ),
-        ),
+          Expanded(
+            child: BlocBuilder<AssignmentListCubit, AssignmentState>(
+              builder: (context, state) {
+                if (state is AssignmentsLoadedState) {
+                  return ListView.builder(
+                    itemCount: state.assignments.length,
+                    itemBuilder: (context, index) {
+                      final assignment = state.assignments[index];
+                      return ListTile(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    AssignmentView(assignment: assignment)),
+                          );
+                        },
+                        title: Center(child: Text(assignment.name)),
+                        subtitle: Center(
+                          child: Text(
+                              "Due: ${DateFormat.yMMMd().format(assignment.dueDate)}"),
+                        ),
+                      );
+                    },
+                  );
+                }
+                return const CircularProgressIndicator();
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

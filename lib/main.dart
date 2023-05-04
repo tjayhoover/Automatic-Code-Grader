@@ -27,6 +27,7 @@ void main() async {
       BlocProvider(create: (BuildContext context) => UserDeleteCubit()),
       BlocProvider(create: (BuildContext context) => UserCreateCubit()),
       BlocProvider(create: (BuildContext context) => StudentGradeReport()),
+      BlocProvider(create: (BuildContext context) => SubmissionCubit()),
       BlocProvider(create: (BuildContext context) => InstructorGradeReport()),
     ],
     child: MaterialApp(
