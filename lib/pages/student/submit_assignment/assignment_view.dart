@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'dart:io';
 
-import 'package:project3_ui/cubits/assignments/assignments_cubit.dart';
+import 'package:project3_ui/cubits/submissions/submissions_cubit.dart';
 import 'package:project3_ui/cubits/states/submission_state.dart';
 import 'package:project3_ui/entities/assignment.dart';
 
@@ -112,8 +112,18 @@ class AssignmentView extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 20, bottom: 8),
-            child: BlocBuilder<SubmissionCubit, SubmissionState>(
-                builder: (context, state) {
+            child: BlocConsumer<SubmissionCubit, SubmissionState>(
+                listener: (context, state) {
+              if (state is SubmissionLoadedState) {
+                showDialog<void>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                          title: const Text('Grade'),
+                          content: Text(
+                              'You passed ${state.casesPassed} out of ${state.totalCases} test cases.'),
+                        ));
+              }
+            }, builder: (context, state) {
               if (state is SubmissionInitialState) {
                 return ElevatedButton(
                   child: const Text('Submit Assignment'),
@@ -127,12 +137,15 @@ class AssignmentView extends StatelessWidget {
               } else if (state is SubmissionLoadingState) {
                 return const CircularProgressIndicator();
               } else if (state is SubmissionLoadedState) {
-                return Text(
-                  "You passed ${state.casesPassed} out of ${state.totalCases} test cases.",
-                  style: TextStyle(
-                      color: Colors.grey[800],
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15),
+                return ElevatedButton(
+                  child: const Text('Resubmit Assignment'),
+                  onPressed: () async {
+                    print("submitting");
+                    var subCubit = BlocProvider.of<SubmissionCubit>(context);
+                    final File file = File('../temp.py');
+                    await file.writeAsString(txt.text);
+                    subCubit.submitAssignment(_assignment.id, 68, file);
+                  },
                 );
               } else if (state is SubmissionFailureState) {
                 return Text(
