@@ -23,7 +23,7 @@ class StudentHome extends StatelessWidget {
               onPressed: () {
                 var assignmentCubit =
                     BlocProvider.of<AssignmentListCubit>(context);
-                assignmentCubit.loadAssignments();
+                assignmentCubit.loadPendingAssignments(8);
                 Navigator.push(
                   context,
                   MaterialPageRoute(

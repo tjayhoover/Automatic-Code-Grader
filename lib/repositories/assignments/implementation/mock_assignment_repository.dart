@@ -19,7 +19,10 @@ class MockAssignmentRepository implements AssignmentRepository {
   }
 
   @override
-  Future<List<int>> submitAssignment(int assignmentID, int studentID, File code) async {
+  Future<List<int>> submitAssignment(
+      int assignmentID, int studentID, File code) async {
+    await Future.delayed(const Duration(seconds: 5));
+    print("delayed call");
     return [5, 10];
   }
 }

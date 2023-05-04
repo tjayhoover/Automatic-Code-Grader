@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project3_ui/pages/student/submit_assignment/assignment_view.dart';
 import 'package:project3_ui/cubits/assignments/assignments_cubit.dart';
+import 'package:project3_ui/pages/student/submit_assignment/assignment_view.dart';
+import 'package:project3_ui/cubits/submissions/submissions_cubit.dart';
 import 'package:project3_ui/cubits/states/assignment_state.dart';
 import 'package:intl/intl.dart';
 
@@ -33,6 +34,9 @@ class AssignmentsView extends StatelessWidget {
                       final assignment = state.assignments[index];
                       return ListTile(
                         onTap: () {
+                          var subCubit =
+                              BlocProvider.of<SubmissionCubit>(context);
+                          subCubit.emitInit(); // Emit the initial state
                           Navigator.push(
                             context,
                             MaterialPageRoute(
