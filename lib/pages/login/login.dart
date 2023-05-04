@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project3_ui/cubits/assignments/assignments_cubit.dart';
 
 import '../student/student_home.dart';
 import '../instructor/instructor_home.dart';
@@ -19,6 +21,8 @@ class LogInPage extends StatelessWidget {
             ElevatedButton(
               child: const Text('Log in as student'),
               onPressed: () {
+                var bloc = BlocProvider.of<AssignmentListCubit>(context);
+                bloc.loadPendingAssignments(5);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const StudentHome()),

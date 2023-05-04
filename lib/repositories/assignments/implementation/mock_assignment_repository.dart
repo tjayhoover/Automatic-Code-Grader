@@ -4,11 +4,12 @@ import 'dart:io';
 
 class MockAssignmentRepository implements AssignmentRepository {
   @override
-  List<Assignment> getPendingAssignments(int studentID) {
+  Future<List<Assignment>> getPendingAssignments(int studentID) async {
     List<Assignment> assignmentList = [
       Assignment(1, "Test One", DateTime.now(), "This is test #1."),
       Assignment(2, "Test2", DateTime.now(), "This is amazing"),
     ];
+    await Future.delayed(const Duration(seconds: 3));
     return assignmentList;
   }
 
