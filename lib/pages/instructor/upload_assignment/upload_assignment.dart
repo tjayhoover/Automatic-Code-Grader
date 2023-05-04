@@ -1,3 +1,6 @@
+import 'package:universal_io/io.dart';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,12 +24,35 @@ class UploadAssignmentState extends State<UploadAssignment> {
   DateTime date = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
 
+  late List<File> inputs;
+  late List<File> outputs;
+
   void initState() {
     super.initState();
   }
 
   void dispose() {
     super.dispose();
+  }
+
+  void chooseInputs() async {
+    inputs = [];
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom, allowMultiple: true, allowedExtensions: ['txt']);
+    for (var f in result!.files) {
+      var curFile = f.bytes;
+      inputs.add(File.fromRawPath(curFile!));
+    }
+  }
+
+  void chooseOutputs() async {
+    outputs = [];
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom, allowMultiple: true, allowedExtensions: ['txt']);
+    for (var f in result!.files) {
+      var curFile = f.bytes;
+      outputs.add(File.fromRawPath(curFile!));
+    }
   }
 
   Widget buildTextFields(BuildContext context) {
@@ -53,25 +79,19 @@ class UploadAssignmentState extends State<UploadAssignment> {
           ),
           Row(
             children: [
-              SizedBox(
-                child: TextField(
-                  controller: inputController,
-                  decoration: InputDecoration(hintText: "Assignment inputs"),
-                  maxLines: 10,
-                ),
-                height: 300,
-                width: MediaQuery.of(context).size.width / 3,
+              ElevatedButton(
+                child: Text("Upload input files"),
+                onPressed: () {
+                  chooseInputs();
+                },
               ),
               Spacer(),
-              SizedBox(
-                child: TextField(
-                  controller: outputController,
-                  decoration: InputDecoration(hintText: "Assignment outputs"),
-                  maxLines: 10,
-                ),
-                height: 300,
-                width: MediaQuery.of(context).size.width / 3,
-              )
+              ElevatedButton(
+                child: Text("Upload output files"),
+                onPressed: () {
+                  chooseOutputs();
+                },
+              ),
             ],
           ),
           ElevatedButton(
@@ -83,8 +103,8 @@ class UploadAssignmentState extends State<UploadAssignment> {
                   nameController.text,
                   dueDate,
                   descController.text,
-                  (inputController.text.split('\n')),
-                  (outputController.text).split('\n'));
+                  inputs,
+                  outputs);
             },
           )
         ],
