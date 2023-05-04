@@ -1,14 +1,10 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project3_ui/entities/assignment.dart';
-
-// This may actually be evil
-import 'package:project3_ui/main.dart';
-
-
 import 'package:project3_ui/cubits/states/assignment_state.dart';
-import 'package:project3_ui/repositories/assignments/implementation/mock_assignment_repository.dart';
 import 'package:project3_ui/repositories/assignments/interface/assignment_repository.dart';
+
+import 'package:project3_ui/injection.dart';
 
 class UploadAssignmentCubit extends Cubit<AssignmentState> {
   late AssignmentRepository repo;
@@ -57,13 +53,10 @@ class AssignmentListCubit extends Cubit<AssignmentState> {
     }
   }
 
-  // For testing only
-  AssignmentRepository mockRepo = MockAssignmentRepository();
-
   // Query the assignment repo for the pending assignments
   Future<List<Assignment>> _fetchPendingAssignments(int studentID) async {
     // TODO: Implement fetching of assignments from API or database
-    var assignments = mockRepo.getPendingAssignments(studentID);
+    var assignments = assignmentRepo.getPendingAssignments(studentID);
     return assignments;
   }
 }

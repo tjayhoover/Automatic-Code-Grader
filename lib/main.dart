@@ -15,7 +15,6 @@ import 'package:project3_ui/cubits/submissions/submissions_cubit.dart';
 
 import 'pages/login/login.dart';
 
-final GetIt getIt = GetIt.instance;
 
 void main() async {
   GetIt.I.registerSingleton<UserRepository>(MockUserRepository());

@@ -5,8 +5,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project3_ui/cubits/states/submission_state.dart';
 
-// This may actually be evil
-import 'package:project3_ui/main.dart';
+import 'package:project3_ui/injection.dart';
 
 class SubmissionCubit extends Cubit<SubmissionState> {
   late AssignmentRepository assignmentRepo;
@@ -28,12 +27,8 @@ class SubmissionCubit extends Cubit<SubmissionState> {
     emit(SubmissionInitialState());
   }
 
-  // This is bad and just for testing.
-  // Need to depend on an abstraction, not this concrete implementation.
-  AssignmentRepository mockRepo = MockAssignmentRepository();
-
   Future<List<int>> _submitAssignment(
       int assignmentID, int studentID, File code) async {
-    return mockRepo.submitAssignment(assignmentID, studentID, code);
+    return assignmentRepo.submitAssignment(assignmentID, studentID, code);
   }
 }
