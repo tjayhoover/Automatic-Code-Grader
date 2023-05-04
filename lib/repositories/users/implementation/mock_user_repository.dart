@@ -11,4 +11,9 @@ class MockUserRepository implements UserRepository {
     ];
     return userList;
   }
+
+  @override
+  User logIn(String username, String password) {
+    return User(69, username, "student");
+  }
 }

@@ -4,5 +4,7 @@ abstract class UserRepository {
   // Returns a list of all users
   List<User> getAllUsers();
 
+  User logIn(String username, String password);
+
   // TODO: Supply other functions needed for this interface
 }
