@@ -19,7 +19,7 @@ class MockAssignmentRepository implements AssignmentRepository {
   }
 
   @override
-  int submitAssignment(int assignmentID, int studentID, File code) {
-    return 5;
+  Future<List<int>> submitAssignment(int assignmentID, int studentID, File code) async {
+    return [5, 10];
   }
 }

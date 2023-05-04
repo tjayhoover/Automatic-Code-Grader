@@ -41,8 +41,8 @@ class SubmissionCubit extends Cubit<SubmissionState> {
 
   void submitAssignment(int assignmentID, int userID, File code) async {
     try {
-      int score = await _submitAssignment(assignmentID, userID, code);
-      emit(SubmissionLoadedState(score, 10));
+      List<int> scores = await _submitAssignment(assignmentID, userID, code);
+      emit(SubmissionLoadedState(scores[0], scores[1]));
     } catch (e) {
       emit(SubmissionFailureState());
     }
@@ -52,10 +52,9 @@ class SubmissionCubit extends Cubit<SubmissionState> {
   // Need to depend on an abstraction, not this concrete implementation.
   final assignmentRepo = MockAssignmentRepository();
 
-  Future<int> _submitAssignment(
+  Future<List<int>> _submitAssignment(
       int assignmentID, int studentID, File code) async {
-    int grade = assignmentRepo.submitAssignment(assignmentID, studentID, code);
-    return grade;
+    return assignmentRepo.submitAssignment(assignmentID, studentID, code);
   }
 }
 

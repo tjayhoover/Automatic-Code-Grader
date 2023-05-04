@@ -20,29 +20,31 @@ class AssignmentView extends StatelessWidget {
   }
 
   late Assignment _assignment;
+  String? path;
+  var txt = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Assignment View')),
       body: Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        child: Column(children: [
           Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 _assignment.name,
-                style: TextStyle(
-                    color: Colors.grey[800],
-                    fontWeight: FontWeight.w900,
+                style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
                     fontSize: 40),
               )),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
               "Due: ${DateFormat.yMMMd().format(_assignment.dueDate)}",
-              style: TextStyle(
-                  color: Colors.grey[800],
-                  fontWeight: FontWeight.w700,
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w300,
                   fontSize: 20),
             ),
           ),
@@ -56,30 +58,71 @@ class AssignmentView extends StatelessWidget {
                   fontSize: 15),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(
-              child: const Text('Choose File'),
-              onPressed: () async {
-                var subCubit = BlocProvider.of<SubmissionCubit>(context);
-                var path = await chooseCodeFile();
-                if (path != null) {
-                  subCubit.submitAssignment(_assignment.id, 69, File(path));
-                }
-              },
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              "Your Code:",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15),
+            ),
+          ),
+          SizedBox(
+            width: 500,
+            height: 200,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: TextField(
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                controller: txt,
+              ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    "Or",
+                    style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                      child: const Text('Choose File'),
+                      onPressed: () async {
+                        path = await chooseCodeFile();
+                        File(path!).readAsString().then((String contents) {
+                          txt.text = contents;
+                        });
+                      }),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 20, bottom: 8),
             child: BlocBuilder<SubmissionCubit, SubmissionState>(
                 builder: (context, state) {
               if (state is SubmissionInitialState) {
-                return Text(
-                  "Submit your assignment!",
-                  style: TextStyle(
-                      color: Colors.grey[800],
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15),
+                return ElevatedButton(
+                  child: const Text('Submit Assignment'),
+                  onPressed: () async {
+                    var subCubit = BlocProvider.of<SubmissionCubit>(context);
+                    final File file = File('../temp.py');
+                    await file.writeAsString(txt.text);
+                    subCubit.submitAssignment(_assignment.id, 68, file);
+                  },
                 );
               } else if (state is SubmissionLoadingState) {
                 return const CircularProgressIndicator();
