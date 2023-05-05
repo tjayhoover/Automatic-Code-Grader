@@ -23,36 +23,6 @@ class LogInPage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            ElevatedButton(
-              child: const Text('Log in as student'),
-              onPressed: () {
-                var bloc = BlocProvider.of<AssignmentListCubit>(context);
-                bloc.loadPendingAssignments();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const StudentHome()),
-                );
-              },
-            ),
-            ElevatedButton(
-              child: const Text('Log in as an instructor'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const InstructorHome()),
-                );
-              },
-            ),
-            ElevatedButton(
-              child: const Text('Log in as an admin'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const AdminHome()),
-                );
-              },
-            ),
             SizedBox(
               width: 300,
               child: Padding(
