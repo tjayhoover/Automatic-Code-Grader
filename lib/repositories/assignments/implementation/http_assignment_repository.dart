@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'dart:typed_data';
+
+import 'package:get_it/get_it.dart';
 import 'package:project3_ui/url.dart';
 import 'package:project3_ui/entities/assignment.dart';
 import 'dart:io';
@@ -7,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:project3_ui/entities/grade_report.dart';
 
 import 'package:project3_ui/repositories/assignments/interface/assignment_repository.dart';
+import 'package:project3_ui/repositories/login/implementation/http_login_repo.dart';
 
 class HttpAssignmentRepo implements AssignmentRepository {
   @override
@@ -21,30 +25,42 @@ class HttpAssignmentRepo implements AssignmentRepository {
         .toList();
   }
 
+  //Could not get the ability to read multiple files. Only reads the first file.
+  Future<Uint8List> readThroughFiles(File f) async {
+    return await f.readAsBytes();
+  }
+
   @override
   Future<Assignment> postAssignment(String name, String desc, DateTime dueDate,
       List<File> inputs, List<File> outputs) async {
-    Assignment a =
-        Assignment(name, dueDate, desc, inputs: inputs, outputs: outputs);
+    int id = GetIt.I<LiveLoginRepository>().getCurrentUser()!.id;
+    Assignment a = Assignment(name, dueDate, desc);
     var client = http.Client();
     try {
-      var response = await client.post(Uri.parse('$serverURL/assignments'),
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'id 1,'
-          },
-          body: jsonEncode(a.toJson()));
-      if (response.statusCode == 201) {
-        return Assignment.fromJson(jsonDecode(response.body));
-      } else {
-        throw Exception("Posting assignment failed");
-      }
+      var request =
+          new http.MultipartRequest("POST", Uri.parse('$serverURL/assignments'));
+      request.fields['name'] = name;
+      request.fields['dueDate'] = dueDate.toString();
+      request.fields['desc'] = desc;
+      request.files.add(http.MultipartFile.fromBytes(
+          'inputFiles', await inputs[0].readAsBytes()));
+      request.files.add(http.MultipartFile.fromBytes(
+          'outputFiles', await outputs[0].readAsBytes()));
+      request.headers['Authorization'] = 'id: $id,';
+      request.headers['Content-Type'] = 'application/json';
+      request.send().then((response) {
+        if (response.statusCode == 201) {
+          return a;
+        } else {
+          throw Exception("Could not post assignment");
+        }
+      });
+      return a;
     } catch (e) {
       rethrow;
     } finally {
       client.close();
     }
-    throw UnimplementedError();
   }
 
   @override

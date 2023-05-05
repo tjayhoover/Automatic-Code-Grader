@@ -85,14 +85,14 @@ class UploadAssignmentState extends State<UploadAssignment> {
           Row(
             children: [
               ElevatedButton(
-                child: Text("Upload input files"),
+                child: Text("Upload input file"),
                 onPressed: () {
                   chooseInputs();
                 },
               ),
               Spacer(),
               ElevatedButton(
-                child: Text("Upload output files"),
+                child: Text("Upload output file"),
                 onPressed: () {
                   chooseOutputs();
                 },
