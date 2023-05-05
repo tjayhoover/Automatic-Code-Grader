@@ -4,14 +4,13 @@ import 'package:project3_ui/entities/user.dart';
 import 'package:project3_ui/cubits/states/user_state.dart';
 import 'package:project3_ui/repositories/users/implementation/mock_user_repository.dart';
 import 'package:project3_ui/repositories/users/interface/user_repository.dart';
-
-import 'package:project3_ui/injection.dart';
+import 'package:get_it/get_it.dart';
 
 class UserListCubit extends Cubit<UserState> {
   late UserRepository repo;
   
   UserListCubit() : super(UserInitialState()) {
-    repo = getIt<UserRepository>();
+    repo = GetIt.I<UserRepository>();
   }
 
   void loadUsers() async {

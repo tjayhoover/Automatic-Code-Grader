@@ -138,7 +138,7 @@ class AssignmentView extends StatelessWidget {
                     var subCubit = BlocProvider.of<SubmissionCubit>(context);
                     final File file = File('../temp.py');
                     await file.writeAsString(txt.text);
-                    subCubit.submitAssignment(_assignment.id, 68, file);
+                    subCubit.submitAssignment(_assignment.id, file);
                   },
                 );
               } else if (state is SubmissionLoadingState) {
@@ -154,7 +154,7 @@ class AssignmentView extends StatelessWidget {
                     var subCubit = BlocProvider.of<SubmissionCubit>(context);
                     final File file = File('../temp.py');
                     await file.writeAsString(txt.text);
-                    subCubit.submitAssignment(_assignment.id, 68, file);
+                    subCubit.submitAssignment(_assignment.id, file);
                   },
                 );
               } else if (state is SubmissionFailureState) {

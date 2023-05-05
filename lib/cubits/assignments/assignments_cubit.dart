@@ -1,26 +1,24 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project3_ui/entities/assignment.dart';
 import 'package:project3_ui/cubits/states/assignment_state.dart';
 import 'package:project3_ui/repositories/assignments/interface/assignment_repository.dart';
 
-import 'package:project3_ui/injection.dart';
+import 'package:get_it/get_it.dart';
+import 'package:project3_ui/repositories/login/interface/login_repository.dart';
 
 class UploadAssignmentCubit extends Cubit<AssignmentState> {
   late AssignmentRepository repo;
 
   UploadAssignmentCubit() : super(AssignmentInitialState()) {
-    repo = getIt<AssignmentRepository>();
+    repo = GetIt.I<AssignmentRepository>();
   }
 
   Future<void> uploadAssignment(String name, DateTime dueDate, String desc,
-      List<String> inputs, List<String> outputs) async {
+      List<File> inputs, List<File> outputs) async {
     try {
-      if (name != "" &&
-          desc != "" &&
-          inputs.isNotEmpty &&
-          outputs.isNotEmpty &&
-          inputs.length == outputs.length) {
+      if (name != "" && desc != "" && inputs.isNotEmpty && outputs.isNotEmpty) {
         emit(AssignmentLoadingState());
         Assignment a =
             await repo.postAssignment(name, desc, dueDate, inputs, outputs);
@@ -41,14 +39,19 @@ class UploadAssignmentCubit extends Cubit<AssignmentState> {
 class AssignmentListCubit extends Cubit<AssignmentState> {
   late AssignmentRepository assignmentRepo;
   AssignmentListCubit() : super(AssignmentInitialState()) {
-    assignmentRepo = getIt<AssignmentRepository>();
+    assignmentRepo = GetIt.I<AssignmentRepository>();
   }
 
-  void loadPendingAssignments(int studentID) async {
+  void loadPendingAssignments() async {
     try {
       emit(AssignmentLoadingState());
-      final assignments = await _fetchPendingAssignments(studentID);
-      emit(AssignmentsLoadedState(assignments));
+      var user = GetIt.I<LoginRepository>().getCurrentUser();
+      if (user != null) {
+        final assignments = await _fetchPendingAssignments(user.id);
+        emit(AssignmentsLoadedState(assignments));
+      } else {
+        emit(AssignmentFailureState());
+      }
     } catch (e) {
       emit(AssignmentsFailureState());
     }

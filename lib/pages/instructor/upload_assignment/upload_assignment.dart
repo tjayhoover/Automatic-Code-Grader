@@ -1,3 +1,7 @@
+import 'package:universal_io/io.dart';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project3_ui/cubits/assignments/assignments_cubit.dart';
@@ -22,6 +26,9 @@ class UploadAssignmentState extends State<UploadAssignment> {
   DateTime date = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
 
+  late List<File> inputs;
+  late List<File> outputs;
+
   @override
   void initState() {
     super.initState();
@@ -30,6 +37,26 @@ class UploadAssignmentState extends State<UploadAssignment> {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  void chooseInputs() async {
+    inputs = [];
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom, allowMultiple: true, allowedExtensions: ['txt']);
+    for (var f in result!.files) {
+      var curFile = f.bytes;
+      inputs.add(File.fromRawPath(curFile!));
+    }
+  }
+
+  void chooseOutputs() async {
+    outputs = [];
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom, allowMultiple: true, allowedExtensions: ['txt']);
+    for (var f in result!.files) {
+      var curFile = f.bytes;
+      outputs.add(File.fromRawPath(curFile!));
+    }
   }
 
   Widget buildTextFields(BuildContext context) {
@@ -48,7 +75,8 @@ class UploadAssignmentState extends State<UploadAssignment> {
           buildDueDatePicker(context),
           TextField(
             controller: descController,
-            decoration: const InputDecoration(hintText: "Assignment description"),
+            decoration:
+                const InputDecoration(hintText: "Assignment description"),
             maxLines: 6,
           ),
           const Padding(
@@ -56,25 +84,19 @@ class UploadAssignmentState extends State<UploadAssignment> {
           ),
           Row(
             children: [
-              SizedBox(
-                height: 300,
-                width: MediaQuery.of(context).size.width / 3,
-                child: TextField(
-                  controller: inputController,
-                  decoration: const InputDecoration(hintText: "Assignment inputs"),
-                  maxLines: 10,
-                ),
+              ElevatedButton(
+                child: Text("Upload input files"),
+                onPressed: () {
+                  chooseInputs();
+                },
               ),
-              const Spacer(),
-              SizedBox(
-                height: 300,
-                width: MediaQuery.of(context).size.width / 3,
-                child: TextField(
-                  controller: outputController,
-                  decoration: const InputDecoration(hintText: "Assignment outputs"),
-                  maxLines: 10,
-                ),
-              )
+              Spacer(),
+              ElevatedButton(
+                child: Text("Upload output files"),
+                onPressed: () {
+                  chooseOutputs();
+                },
+              ),
             ],
           ),
           ElevatedButton(
@@ -86,8 +108,8 @@ class UploadAssignmentState extends State<UploadAssignment> {
                   nameController.text,
                   dueDate,
                   descController.text,
-                  (inputController.text.split('\n')),
-                  (outputController.text).split('\n'));
+                  inputs,
+                  outputs);
             },
           )
         ],
