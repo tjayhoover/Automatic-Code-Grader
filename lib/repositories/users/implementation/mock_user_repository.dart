@@ -21,10 +21,4 @@ class MockUserRepository implements UserRepository {
   bool deleteUser(String user) {
     return true;
   }
-
-  @override
-  Future<User> login(String username, String password) async {
-    await Future.delayed(const Duration(seconds: 1));
-    return User(5, "String", "student");
-  }
 }

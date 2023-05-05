@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project3_ui/cubits/assignments/assignments_cubit.dart';
 import 'package:project3_ui/cubits/login/login_cubit.dart';
-import 'package:project3_ui/cubits/states/user_state.dart';
+import 'package:project3_ui/cubits/states/login_state.dart';
 
 import '../student/student_home.dart';
 import '../instructor/instructor_home.dart';
@@ -27,7 +27,7 @@ class LogInPage extends StatelessWidget {
               child: const Text('Log in as student'),
               onPressed: () {
                 var bloc = BlocProvider.of<AssignmentListCubit>(context);
-                bloc.loadPendingAssignments(5);
+                bloc.loadPendingAssignments();
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const StudentHome()),
@@ -87,48 +87,58 @@ class LogInPage extends StatelessWidget {
                 ),
               ),
             ),
-            BlocConsumer<LoginCubit, UserState>(listener: (context, state) {
-              if (state is UserLoadedState) {
-                // Set the user field in the cubit
-                BlocProvider.of<LoginCubit>(context).setUser(state.user);
-                if (state.user.role == "student") {
+            BlocConsumer<LoginCubit, LoginState>(listener: (context, state) {
+              if (state is LoginSuccessState) {
+                if (state.loggedInUser.role == "student") {
                   var bloc = BlocProvider.of<AssignmentListCubit>(context);
-                  bloc.loadPendingAssignments(5);
+                  bloc.loadPendingAssignments();
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const StudentHome()),
                   );
-                } else if (state.user.role == "instructor") {
+                } else if (state.loggedInUser.role == "instructor") {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const InstructorHome()),
                   );
-                } else if (state.user.role == "admin") {
+                } else if (state.loggedInUser.role == "admin") {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const AdminHome()),
                   );
                 }
-              } else if (state is UserFailureState) {
+              } else if (state is LoginFailureState) {
                 showDialog<void>(
                     context: context,
                     builder: (BuildContext context) => const AlertDialog(
                           title: Text('Error'),
                           content: Text('Login failed. Try again.'),
                         ));
+                usrnmCtrl.clear();
+                pwCtrl.clear();
               }
             }, builder: (context, state) {
-              if (state is UserInitialState) {
+              if (state is LoginInitialState) {
                 return const Text('');
-              } else if (state is UserLoadingState) {
+              } else if (state is LoginLoadingState) {
                 return const Padding(
                   padding: EdgeInsets.only(top: 20.0),
                   child: CircularProgressIndicator(),
                 );
+              } else if (state is LoginSuccessState) {
+                // What should we do here?
+                return Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Text(
+                      "You (${state.loggedInUser.role}) are logged in as ${state.loggedInUser.name}"),
+                );
+              } else if (state is LoginFailureState) {
+                // TODO: What should actually be done here?
+                return const Text("");
               } else {
-                return const Text('Unknown State');
+                return Text(state.toString());
               }
             }),
           ],
