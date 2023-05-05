@@ -13,7 +13,7 @@ class HttpAssignmentRepo implements AssignmentRepository {
   @override
   Future<List<Assignment>> getPendingAssignments(int studentID) async {
     //Create the request
-    var response = await http.get((Uri.parse('../assignments/pending')),
+    var response = await http.get((Uri.parse('/assignments/pending')),
         headers: {'Authorization': studentID.toString()});
 
     // Decode the json, turn it into a list of assignments, and return it
@@ -51,7 +51,7 @@ class HttpAssignmentRepo implements AssignmentRepository {
   @override
   Future<List<int>> submitAssignment(
       int assignmentID, int studentID, File code) async {
-    var uri = Uri.https('example.com', 'create');
+    var uri = Uri.https('/assignments/${studentID.toString()}/submit', 'create');
     var request = http.MultipartRequest('POST', uri);
     // Add the user id to the header
     request.headers["Authorization"] = studentID.toString();

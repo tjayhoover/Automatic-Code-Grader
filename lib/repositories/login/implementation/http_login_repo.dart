@@ -9,7 +9,7 @@ class LiveLoginRepository implements LoginRepository {
 
   @override
   Future<User?> login(String username, String password) async {
-    var response = await http.post((Uri.parse('../login')),
+    var response = await http.post((Uri.parse('/login')),
         body: {"username": username, "password": password});
 
     // In this case the log in was successful
