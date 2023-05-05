@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project3_ui/cubits/assignments/assignments_cubit.dart';
 import 'package:project3_ui/cubits/login/login_cubit.dart';
 import 'package:project3_ui/cubits/states/user_state.dart';
+import 'package:project3_ui/cubits/states/login_state.dart';
+import 'package:project3_ui/cubits/login/login_cubit.dart';
 
 import '../student/student_home.dart';
 import '../instructor/instructor_home.dart';
@@ -87,9 +89,9 @@ class LogInPage extends StatelessWidget {
                 ),
               ),
             ),
-            BlocConsumer<LoginCubit, UserState>(listener: (context, state) {
-              if (state is UserLoadedState) {
-                if (state.user.role == "student") {
+            BlocConsumer<LoginCubit, LoginState>(listener: (context, state) {
+              if (state is LoginSuccessState) {
+                if (state.loggedInUser.role == "student") {
                   var bloc = BlocProvider.of<AssignmentListCubit>(context);
                   bloc.loadPendingAssignments(5);
                   Navigator.push(
@@ -97,13 +99,13 @@ class LogInPage extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => const StudentHome()),
                   );
-                } else if (state.user.role == "instructor") {
+                } else if (state.loggedInUser.role == "instructor") {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const InstructorHome()),
                   );
-                } else if (state.user.role == "admin") {
+                } else if (state.loggedInUser.role == "admin") {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const AdminHome()),
