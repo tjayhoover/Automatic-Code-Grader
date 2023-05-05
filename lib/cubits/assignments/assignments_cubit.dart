@@ -6,6 +6,7 @@ import 'package:project3_ui/cubits/states/assignment_state.dart';
 import 'package:project3_ui/repositories/assignments/interface/assignment_repository.dart';
 
 import 'package:get_it/get_it.dart';
+import 'package:project3_ui/repositories/login/interface/login_repository.dart';
 
 class UploadAssignmentCubit extends Cubit<AssignmentState> {
   late AssignmentRepository repo;
@@ -41,11 +42,16 @@ class AssignmentListCubit extends Cubit<AssignmentState> {
     assignmentRepo = GetIt.I<AssignmentRepository>();
   }
 
-  void loadPendingAssignments(int studentID) async {
+  void loadPendingAssignments() async {
     try {
       emit(AssignmentLoadingState());
-      final assignments = await _fetchPendingAssignments(studentID);
-      emit(AssignmentsLoadedState(assignments));
+      var user = GetIt.I<LoginRepository>().getCurrentUser();
+      if (user != null) {
+        final assignments = await _fetchPendingAssignments(user.id);
+        emit(AssignmentsLoadedState(assignments));
+      } else {
+        emit(AssignmentFailureState());
+      }
     } catch (e) {
       emit(AssignmentsFailureState());
     }
