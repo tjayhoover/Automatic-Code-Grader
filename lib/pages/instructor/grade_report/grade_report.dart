@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project3_ui/cubits/grade_reports/instructor_grade_report_cubit.dart';
 import 'package:project3_ui/cubits/states/instructor_grade_report_states.dart';
+import 'package:project3_ui/entities/assignment_grade_report.dart';
 
 class InstructorGradeReportWidget extends StatelessWidget {
   const InstructorGradeReportWidget({super.key});
@@ -19,9 +20,7 @@ class InstructorGradeReportWidget extends StatelessWidget {
           );
         } else if (state is InstructorGradeReportLoadedState) {
           return GradeReportStatefulWidget(
-            studentNames:
-                state.gradeReportList.map((e) => e.studentName).toList(),
-            assignmentNames: state.assignmentNames,
+            gradeReport: state.gradeReport,
           );
         } else if (state is InstructorGradeReportFailureState) {
           return const Center(
@@ -38,12 +37,10 @@ class InstructorGradeReportWidget extends StatelessWidget {
 class GradeReportStatefulWidget extends StatefulWidget {
   const GradeReportStatefulWidget({
     super.key,
-    required this.studentNames,
-    required this.assignmentNames,
+    required this.gradeReport,
   });
 
-  final List<String> studentNames;
-  final List<String> assignmentNames;
+  final Map<String, List<AssignmentGradeReport>> gradeReport;
 
   @override
   State<GradeReportStatefulWidget> createState() => _GradeReportState();
@@ -56,18 +53,29 @@ class _GradeReportState extends State<GradeReportStatefulWidget> {
         child: Drawer(
             child: ListView.separated(
       padding: const EdgeInsets.all(12.0),
-      itemCount: widget.assignmentNames.length,
+      itemCount: widget.gradeReport.keys.length,
       itemBuilder: (_, int aIndex) {
+        List<String> aNames = widget.gradeReport.keys.toList();
         return ExpansionTile(
-          title: Text(widget.assignmentNames[aIndex]),
-          subtitle: const Text('stats go here'),
+          title: Text(aNames[aIndex]),
           children: <Widget>[
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: widget.studentNames.length,
+              itemCount: widget.gradeReport[aNames[aIndex]]!.length,
               itemBuilder: (_, int sIndex) {
-                return ListTile(title: Text(widget.studentNames[sIndex]));
+                String name =
+                    widget.gradeReport[aNames[aIndex]]![sIndex].studentName;
+                String grade = widget
+                    .gradeReport[aNames[aIndex]]![sIndex].casesPassed
+                    .toString();
+                String total = widget
+                    .gradeReport[aNames[aIndex]]![sIndex].totalCases
+                    .toString();
+                return ListTile(
+                  title: Text(name),
+                  subtitle: Text('$grade / $total'),
+                );
               },
             ),
           ],
