@@ -9,6 +9,7 @@ import 'package:project3_ui/injection.dart';
 
 class UserListCubit extends Cubit<UserState> {
   late UserRepository repo;
+  
   UserListCubit() : super(UserInitialState()) {
     repo = getIt<UserRepository>();
   }
@@ -22,15 +23,18 @@ class UserListCubit extends Cubit<UserState> {
     }
   }
 
-  // Query the assignment repo for the pending assignments
+
   Future<List<User>> _fetchUsers() async {
-    // TODO: Implement fetching of assignments from API or database
     return repo.getAllUsers();
   }
 }
 
 class UserCreateCubit extends Cubit<UserState> {
-  UserCreateCubit() : super(UserInitialState());
+  late UserRepository repo;
+
+  UserCreateCubit() : super(UserInitialState()){
+     repo = getIt<UserRepository>();
+  }
 
   void createUser(String username, String role) async {
     try {
@@ -47,19 +51,17 @@ class UserCreateCubit extends Cubit<UserState> {
     emit(UserInitialState());
   }
 
-  // This is bad and just for testing.
-  // Need to depend on an abstraction, not this concrete implementation.
-  final userRepo = MockUserRepository();
-
-  // Query the assignment repo for the pending assignments
   Future<bool> _createUser(String username, String role) async {
-    // TODO: Implement fetching of assignments from API or database
-    return userRepo.createUser(username, role);
+    return repo.createUser(username, role);
   }
 }
 
 class UserDeleteCubit extends Cubit<UserState> {
-  UserDeleteCubit() : super(UserInitialState());
+  late UserRepository repo;
+
+  UserDeleteCubit() : super(UserInitialState()){
+     repo = getIt<UserRepository>();
+  }
 
   void deleteUser(String username) async {
     try {
@@ -72,7 +74,7 @@ class UserDeleteCubit extends Cubit<UserState> {
     }
   }
 
-  void getAllUsers() async{
+  void getAllUsers() async {
     try {
       emit(UserLoadingState());
       final list = await _getAllUsers();
@@ -87,17 +89,11 @@ class UserDeleteCubit extends Cubit<UserState> {
     emit(UserInitialState());
   }
 
-  // This is bad and just for testing.
-  // Need to depend on an abstraction, not this concrete implementation.
-  final userRepo = MockUserRepository();
-
-  // Query the assignment repo for the pending assignments
   Future<bool> _deleteUser(String username) async {
-    // TODO: Implement fetching of assignments from API or database
-    return userRepo.deleteUser(username);
+    return repo.deleteUser(username);
   }
 
-  Future<List<User>> _getAllUsers() async{
-      return userRepo.getAllUsers();
+  Future<List<User>> _getAllUsers() async {
+    return repo.getAllUsers();
   }
 }
