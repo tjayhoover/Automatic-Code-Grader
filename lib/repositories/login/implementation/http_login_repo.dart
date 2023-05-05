@@ -10,7 +10,6 @@ class LiveLoginRepository implements LoginRepository {
 
   @override
   Future<User?> login(String username, String password) async {
-    print("here");
     try {
       var response = await http.post((Uri.parse('$serverURL/login')),
           body: jsonEncode({"username": username, "password": password}),
@@ -18,16 +17,16 @@ class LiveLoginRepository implements LoginRepository {
             'Content-type': 'application/json',
             'Accept': 'application/json'
           });
-
-      print(response.statusCode.toString());
-      // In this case the log in was successful
+      // In this case the login was successful
       if (response.statusCode == 201) {
         return User.fromJson(json.decode(response.body));
-      } else {
-        // In this case the log in was unsuccessful
+      }
+      // In this case the login was unsuccessful
+      else {
         return null;
       }
     } catch (e) {
+      // Debug output
       print(e);
     }
   }
