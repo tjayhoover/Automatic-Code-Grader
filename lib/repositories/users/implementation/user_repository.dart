@@ -13,7 +13,7 @@ class OnlineUserRepository implements UserRepository {
     //String jsonString =
     //    '[{"id": 1,"name": "User1","role": "admin"},{"id": 2,"name": "User2","role": "student"},{"id": 4,"name": "User4","role": "instructor"}]';
 
-    return (json.decode(response.toString()) as List)
+    return (json.decode(response.body) as List)
         .map((i) => User.fromJson(i))
         .toList();
   }
