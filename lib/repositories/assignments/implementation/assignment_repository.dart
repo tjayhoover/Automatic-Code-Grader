@@ -6,14 +6,22 @@ import 'package:project3_ui/repositories/assignments/interface/assignment_reposi
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
-class MockAssignmentRepository implements AssignmentRepository {
+class OnlineAssignmentRepository implements AssignmentRepository {
   @override
   Future<List<Assignment>> getPendingAssignments(int studentID) async {
-    List<Assignment> assignmentList = [
-      Assignment(1, "Test One", DateTime.now(), "This is test #1."),
-      Assignment(2, "Test2", DateTime.now(), "This is amazing"),
-    ];
-    return assignmentList;
+    // Create the request
+    // var response = await http.get((Uri.parse('../assignments/pending')),
+    //     headers: {'Authorization': studentID.toString()});
+
+    // Test string
+    String jsonString =
+        '[{"id": 5,"name": "Test x1","dueDate": "2020-07-10 15:00:00.000","description": "hehe"},{"id": 6,"name": "Test x2","dueDate": "2020-07-10 15:00:00.000","description": "hehe"}]';
+    // Decode the response, return the list of pending assignments
+
+    // Decode the json, turn it into a list of assignments, and return it
+    return (json.decode(jsonString) as List)
+        .map((i) => Assignment.fromJson(i))
+        .toList();
   }
 
   @override
@@ -24,7 +32,8 @@ class MockAssignmentRepository implements AssignmentRepository {
   }
 
   @override
-  Future<List<int>> submitAssignment(int assignmentID, int studentID, File code) async {
+  Future<List<int>> submitAssignment(
+      int assignmentID, int studentID, File code) async {
     var uri = Uri.https('example.com', 'create');
     var request = http.MultipartRequest('POST', uri);
     // Add the user id to the header
