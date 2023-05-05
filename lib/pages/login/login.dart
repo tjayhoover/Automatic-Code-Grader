@@ -111,24 +111,33 @@ class LogInPage extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => const AdminHome()),
                   );
                 }
-              } else if (state is UserFailureState) {
+              } else if (state is LoginFailureState) {
                 showDialog<void>(
                     context: context,
                     builder: (BuildContext context) => const AlertDialog(
                           title: Text('Error'),
                           content: Text('Login failed. Try again.'),
                         ));
+                usrnmCtrl.clear();
+                pwCtrl.clear();
               }
             }, builder: (context, state) {
-              if (state is UserInitialState) {
+              if (state is LoginInitialState) {
                 return const Text('');
-              } else if (state is UserLoadingState) {
+              } else if (state is LoginLoadingState) {
                 return const Padding(
                   padding: EdgeInsets.only(top: 20.0),
                   child: CircularProgressIndicator(),
                 );
-              } else if (state is UserLoadedState) {
+              } else if (state is LoginSuccessState) {
                 // What should we do here?
+                return Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Text(
+                      "You (${state.loggedInUser.role}) are logged in as ${state.loggedInUser.name}"),
+                );
+              } else if (state is LoginFailureState) {
+                // TODO: What should actually be done here?
                 return const Text("");
               } else {
                 return Text(state.toString());
