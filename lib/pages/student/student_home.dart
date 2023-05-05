@@ -18,61 +18,74 @@ class StudentHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Student Dashboard')),
-      body: Column(
-        children: [
-          ElevatedButton(
-            child: const Text('Grade Report'),
-            onPressed: () {
-              var grCubit = BlocProvider.of<StudentGradeReport>(context);
-              grCubit.reportRequested();
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const StudentGradeReportPage()),
-              );
-            },
-          ),
-          const Padding(
-            padding: EdgeInsets.all(14.0),
-            child: Text(
-              'Pending Assignments',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+      body: Center(
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(14.0),
+              child: Text(
+                'Pending Assignments',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+              ),
             ),
-          ),
-          Expanded(
-            child: BlocBuilder<AssignmentListCubit, AssignmentState>(
-              builder: (context, state) {
-                if (state is AssignmentsLoadedState) {
-                  return ListView.builder(
-                    itemCount: state.assignments.length,
-                    itemBuilder: (context, index) {
-                      final assignment = state.assignments[index];
-                      return ListTile(
-                        onTap: () {
-                          var subCubit =
-                              BlocProvider.of<SubmissionCubit>(context);
-                          subCubit.emitInit(); // Emit the initial state
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    AssignmentView(assignment: assignment)),
-                          );
-                        },
-                        title: Center(child: Text(assignment.name)),
-                        subtitle: Center(
-                          child: Text(
-                              "Due: ${DateFormat.yMMMd().format(assignment.dueDate)}"),
-                        ),
-                      );
-                    },
+            SizedBox(
+              width: 500,
+              height: 300,
+              child: BlocBuilder<AssignmentListCubit, AssignmentState>(
+                builder: (context, state) {
+                  if (state is AssignmentsLoadedState) {
+                    return ListView.builder(
+                      itemCount: state.assignments.length,
+                      itemBuilder: (context, index) {
+                        final assignment = state.assignments[index];
+                        return ListTile(
+                          onTap: () {
+                            var subCubit =
+                                BlocProvider.of<SubmissionCubit>(context);
+                            subCubit.emitInit(); // Emit the initial state
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      AssignmentView(assignment: assignment)),
+                            );
+                          },
+                          title: Center(child: Text(assignment.name)),
+                          subtitle: Center(
+                            child: Text(
+                                "Due: ${DateFormat.yMMMd().format(assignment.dueDate)}"),
+                          ),
+                        );
+                      },
+                    );
+                  } else if (state is AssignmentLoadingState) {
+                    return const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: Center(child: CircularProgressIndicator()));
+                  } else {
+                    return const Text('Unknown State');
+                  }
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 40),
+              child: ElevatedButton(
+                child: const Text('Grade Report'),
+                onPressed: () {
+                  var grCubit = BlocProvider.of<StudentGradeReport>(context);
+                  grCubit.reportRequested();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const StudentGradeReportPage()),
                   );
-                }
-                return const CircularProgressIndicator();
-              },
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

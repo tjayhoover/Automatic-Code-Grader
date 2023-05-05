@@ -46,6 +46,7 @@ class AssignmentListCubit extends Cubit<AssignmentState> {
 
   void loadPendingAssignments(int studentID) async {
     try {
+      emit(AssignmentLoadingState());
       final assignments = await _fetchPendingAssignments(studentID);
       emit(AssignmentsLoadedState(assignments));
     } catch (e) {
@@ -55,7 +56,6 @@ class AssignmentListCubit extends Cubit<AssignmentState> {
 
   // Query the assignment repo for the pending assignments
   Future<List<Assignment>> _fetchPendingAssignments(int studentID) async {
-    // TODO: Implement fetching of assignments from API or database
     var assignments = assignmentRepo.getPendingAssignments(studentID);
     return assignments;
   }

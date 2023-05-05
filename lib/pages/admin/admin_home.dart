@@ -19,8 +19,8 @@ class AdminHome extends StatelessWidget {
             ElevatedButton(
               child: const Text('Add User'),
               onPressed: () {
-                var Cubit = BlocProvider.of<UserCreateCubit>(context);
-                Cubit.resetState();
+                var cubit = BlocProvider.of<UserCreateCubit>(context);
+                cubit.resetState();
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => AddUser()),
@@ -30,12 +30,12 @@ class AdminHome extends StatelessWidget {
             ElevatedButton(
               child: const Text('Delete User'),
               onPressed: () {
-                var Cubit = BlocProvider.of<UserDeleteCubit>(context);
-                Cubit.resetState();
-                Cubit.getAllUsers();
+                var cubit = BlocProvider.of<UserDeleteCubit>(context);
+                cubit.resetState();
+                cubit.getAllUsers();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => DelUser()),
+                  MaterialPageRoute(builder: (context) => const DelUser()),
                 );
               },
             ),

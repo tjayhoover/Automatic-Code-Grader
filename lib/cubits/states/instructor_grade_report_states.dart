@@ -20,5 +20,6 @@ class InstructorGradeReportLoadedState extends InstructorGradeReportState {
 class InstructorGradeReportFailureState extends InstructorGradeReportState {
   @override
   // TODO: Is this a decent way of checking whether the state exists?
+  // If the state can give you its properties, it probably exists (° ͜ʖ ͡°)
   List<Object?> get props => [false];
 }

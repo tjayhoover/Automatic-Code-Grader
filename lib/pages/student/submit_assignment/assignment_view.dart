@@ -19,9 +19,8 @@ class AssignmentView extends StatelessWidget {
     return result?.paths.first;
   }
 
-  late Assignment _assignment;
-  String? path;
-  var txt = TextEditingController();
+  late final Assignment _assignment;
+  final txt = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -50,68 +49,72 @@ class AssignmentView extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(
-              _assignment.desc,
-              style: TextStyle(
-                  color: Colors.grey[800],
-                  fontWeight: FontWeight.w600,
-                  fontSize: 15),
+            child: SizedBox(
+              width: 500,
+              child: Center(
+                child: Text(
+                  _assignment.desc,
+                  style: TextStyle(
+                      color: Colors.grey[800],
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15),
+                ),
+              ),
             ),
           ),
           const Padding(
             padding: EdgeInsets.all(8.0),
             child: Text(
-              "Your Code:",
+              "Paste Your Code",
               style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w600,
                   fontSize: 15),
             ),
           ),
-          SizedBox(
-            width: 500,
-            height: 200,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: TextField(
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                controller: txt,
+          Container(
+            decoration:
+                BoxDecoration(border: Border.all(color: Colors.tealAccent)),
+            child: SizedBox(
+              width: 500,
+              height: 150,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: TextField(
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  controller: txt,
+                ),
               ),
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              "OR",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    "Or",
-                    style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15),
-                  ),
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.grey, // background
+                  foregroundColor: Colors.black, // foreground
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                      child: const Text('Choose File'),
-                      onPressed: () async {
-                        path = await chooseCodeFile();
-                        File(path!).readAsString().then((String contents) {
-                          txt.text = contents;
-                        });
-                      }),
-                ),
-              ],
-            ),
+                child: const Text('Upload File'),
+                onPressed: () async {
+                  String? path = await chooseCodeFile();
+                  File(path!).readAsString().then((String contents) {
+                    txt.text = contents;
+                  });
+                }),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 8),
+            padding: const EdgeInsets.only(top: 40, bottom: 8),
             child: BlocConsumer<SubmissionCubit, SubmissionState>(
                 listener: (context, state) {
               if (state is SubmissionLoadedState) {
@@ -126,6 +129,10 @@ class AssignmentView extends StatelessWidget {
             }, builder: (context, state) {
               if (state is SubmissionInitialState) {
                 return ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green, // background
+                    foregroundColor: Colors.white, // foreground
+                  ),
                   child: const Text('Submit Assignment'),
                   onPressed: () async {
                     var subCubit = BlocProvider.of<SubmissionCubit>(context);
@@ -138,9 +145,12 @@ class AssignmentView extends StatelessWidget {
                 return const CircularProgressIndicator();
               } else if (state is SubmissionLoadedState) {
                 return ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green, // background
+                    foregroundColor: Colors.white, // foreground
+                  ),
                   child: const Text('Resubmit Assignment'),
                   onPressed: () async {
-                    print("submitting");
                     var subCubit = BlocProvider.of<SubmissionCubit>(context);
                     final File file = File('../temp.py');
                     await file.writeAsString(txt.text);

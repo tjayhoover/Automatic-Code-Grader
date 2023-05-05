@@ -16,6 +16,7 @@ class MockAssignmentRepository implements AssignmentRepository {
     return assignmentList;
   }
 
+  @override
   Future<Assignment> postAssignment(String name, String desc, DateTime dueDate,
       List<String> inputs, List<String> outputs) async {
     await Future.delayed(const Duration(seconds: 1));
@@ -39,9 +40,10 @@ class MockAssignmentRepository implements AssignmentRepository {
     final GradeReport gr = GradeReport.fromJson(parsed);
 
     // Print debug info
-    if (response.statusCode == 200)
+    if (response.statusCode == 200) {
       print(
           'Uploaded! Name:${gr.name} Cases Passed: ${gr.casesPassed} Total Cases: ${gr.totalCases}');
+    }
 
     // Return the cases passed and total cases
     return [gr.casesPassed, gr.totalCases];
