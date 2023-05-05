@@ -4,18 +4,23 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project3_ui/cubits/states/submission_state.dart';
 import 'package:get_it/get_it.dart';
+import 'package:project3_ui/repositories/login/interface/login_repository.dart';
 
 class SubmissionCubit extends Cubit<SubmissionState> {
   late AssignmentRepository assignmentRepo;
   SubmissionCubit() : super(SubmissionInitialState()) {
     assignmentRepo = GetIt.I<AssignmentRepository>();
   }
-  void submitAssignment(int assignmentID, int userID, File code) async {
+  void submitAssignment(int assignmentID, File code) async {
     try {
       emit(SubmissionLoadingState());
-      List<int> scores = await _submitAssignment(assignmentID, userID, code);
-
-      emit(SubmissionLoadedState(scores[0], scores[1]));
+      var user = GetIt.I<LoginRepository>().getCurrentUser();
+      if (user != null) {
+        List<int> scores = await _submitAssignment(assignmentID, user.id, code);
+        emit(SubmissionLoadedState(scores[0], scores[1]));
+      } else {
+        emit(SubmissionFailureState());
+      }
     } catch (e) {
       emit(SubmissionFailureState());
     }

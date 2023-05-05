@@ -11,18 +11,13 @@ import 'package:project3_ui/repositories/assignments/interface/assignment_reposi
 class HttpAssignmentRepo implements AssignmentRepository {
   final String uri = "127.0.0.1:5455";
   @override
-  Future<List<Assignment>> getPendingAssignments(int sutdentID) async {
-    // Create the request
-    // var response = await http.get((Uri.parse('../assignments/pending')),
-    //     headers: {'Authorization': studentID.toString()});
-
-    // Test string
-    String jsonString =
-        '[{"id": 5,"name": "Test x1","dueDate": "2020-07-10 15:00:00.000","description": "hehe"},{"id": 6,"name": "Test x2","dueDate": "2020-07-10 15:00:00.000","description": "hehe"}]';
-    // Decode the response, return the list of pending assignments
+  Future<List<Assignment>> getPendingAssignments(int studentID) async {
+    //Create the request
+    var response = await http.get((Uri.parse('../assignments/pending')),
+        headers: {'Authorization': studentID.toString()});
 
     // Decode the json, turn it into a list of assignments, and return it
-    return (json.decode(jsonString) as List)
+    return (json.decode(response.body) as List)
         .map((i) => Assignment.fromJson(i))
         .toList();
   }

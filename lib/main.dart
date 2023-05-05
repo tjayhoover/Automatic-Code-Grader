@@ -8,7 +8,7 @@ import 'package:project3_ui/cubits/login/login_cubit.dart';
 import 'package:project3_ui/cubits/users/users_cubit.dart';
 import 'package:project3_ui/repositories/login/interface/login_repository.dart';
 import 'package:project3_ui/repositories/login/implementation/mock_login_repo.dart';
-import 'package:project3_ui/repositories/login/implementation/live_login_repo.dart';
+import 'package:project3_ui/repositories/login/implementation/http_login_repo.dart';
 import 'package:project3_ui/repositories/assignments/implementation/mock_assignment_repository.dart';
 import 'package:project3_ui/repositories/assignments/interface/assignment_repository.dart';
 import 'package:project3_ui/repositories/student_grade_reports/implementation/mock_sgr_repository.dart';
