@@ -23,40 +23,19 @@ class LogInPage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            ElevatedButton(
-              child: const Text('Log in as student'),
-              onPressed: () {
-                var bloc = BlocProvider.of<AssignmentListCubit>(context);
-                bloc.loadPendingAssignments();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const StudentHome()),
-                );
-              },
-            ),
-            ElevatedButton(
-              child: const Text('Log in as an instructor'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const InstructorHome()),
-                );
-              },
-            ),
-            ElevatedButton(
-              child: const Text('Log in as an admin'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const AdminHome()),
-                );
-              },
-            ),
+            const Padding(
+                padding: EdgeInsets.only(top: 50),
+                child: Text(
+                  'Welcome to Beetcode!',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 30),
+                )),
             SizedBox(
               width: 300,
               child: Padding(
-                padding: const EdgeInsets.only(top: 20.0),
+                padding: const EdgeInsets.only(top: 60.0),
                 child: TextField(
                     decoration: const InputDecoration(hintText: 'Username'),
                     controller: usrnmCtrl),
@@ -75,7 +54,7 @@ class LogInPage extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: 250,
+              width: 150,
               child: Padding(
                 padding: const EdgeInsets.only(top: 30.0),
                 child: ElevatedButton(
