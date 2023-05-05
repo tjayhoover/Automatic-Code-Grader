@@ -127,8 +127,11 @@ class LogInPage extends StatelessWidget {
                   padding: EdgeInsets.only(top: 20.0),
                   child: CircularProgressIndicator(),
                 );
+              } else if (state is UserLoadedState) {
+                // What should we do here?
+                return const Text("");
               } else {
-                return const Text('Unknown State');
+                return Text(state.toString());
               }
             }),
           ],
