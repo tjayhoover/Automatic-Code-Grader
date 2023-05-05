@@ -9,7 +9,7 @@ import 'package:project3_ui/cubits/users/users_cubit.dart';
 import 'package:project3_ui/repositories/login/interface/login_repository.dart';
 import 'package:project3_ui/repositories/login/implementation/http_login_repo.dart';
 import 'package:project3_ui/repositories/assignments/interface/assignment_repository.dart';
-import 'package:project3_ui/repositories/student_grade_reports/implementation/mock_sgr_repository.dart';
+import 'package:project3_ui/repositories/student_grade_reports/implementation/http_sgr_repo.dart';
 import 'package:project3_ui/repositories/student_grade_reports/interface/student_grade_reports_repository.dart';
 import 'package:project3_ui/repositories/users/implementation/user_repository.dart';
 import 'package:project3_ui/repositories/users/interface/user_repository.dart';
@@ -19,7 +19,7 @@ import 'package:project3_ui/repositories/assignments/implementation/http_assignm
 
 void main() async {
   GetIt.I.registerSingleton<UserRepository>(OnlineUserRepository());
-  GetIt.I.registerSingleton<StudentGradeReportRepository>(MockSgrRepository());
+  GetIt.I.registerSingleton<StudentGradeReportRepository>(httpSgrRepo());
   GetIt.I.registerSingleton<AssignmentRepository>(HttpAssignmentRepo());
   GetIt.I.registerSingleton<LoginRepository>(LiveLoginRepository());
   
