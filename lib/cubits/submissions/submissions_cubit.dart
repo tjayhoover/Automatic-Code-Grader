@@ -3,13 +3,12 @@ import 'dart:io';
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project3_ui/cubits/states/submission_state.dart';
-
-import 'package:project3_ui/injection.dart';
+import 'package:get_it/get_it.dart';
 
 class SubmissionCubit extends Cubit<SubmissionState> {
   late AssignmentRepository assignmentRepo;
   SubmissionCubit() : super(SubmissionInitialState()) {
-    assignmentRepo = getIt<AssignmentRepository>();
+    assignmentRepo = GetIt.I<AssignmentRepository>();
   }
   void submitAssignment(int assignmentID, int userID, File code) async {
     try {

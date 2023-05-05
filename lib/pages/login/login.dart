@@ -89,8 +89,6 @@ class LogInPage extends StatelessWidget {
             ),
             BlocConsumer<LoginCubit, UserState>(listener: (context, state) {
               if (state is UserLoadedState) {
-                // Set the user field in the cubit
-                BlocProvider.of<LoginCubit>(context).setUser(state.user);
                 if (state.user.role == "student") {
                   var bloc = BlocProvider.of<AssignmentListCubit>(context);
                   bloc.loadPendingAssignments(5);

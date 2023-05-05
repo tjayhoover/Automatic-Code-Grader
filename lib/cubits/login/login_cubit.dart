@@ -2,20 +2,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project3_ui/cubits/states/user_state.dart';
 import 'package:project3_ui/repositories/users/interface/user_repository.dart';
 import 'package:project3_ui/entities/user.dart';
-
-import 'package:project3_ui/injection.dart';
+import 'package:get_it/get_it.dart';
 
 class LoginCubit extends Cubit<UserState> {
   late UserRepository userRepo;
   LoginCubit() : super(UserInitialState()) {
-    userRepo = getIt<UserRepository>();
+    userRepo = GetIt.I<UserRepository>();
   }
 
-  User? currentUser;
-
-  void setUser(User user) {
-    currentUser = user;
-  }
 
   void logIn(String username, String password) async {
     try {
