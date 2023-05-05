@@ -7,7 +7,4 @@ abstract class UserRepository {
   Future<bool> createUser(String username, String role);
   Future<bool> deleteUser(String username);
 
-  Future<User> login(String username, String password);
-
-  // TODO: Supply other functions needed for this interface
 }

@@ -32,7 +32,7 @@ class UserCreateCubit extends Cubit<UserState> {
   late UserRepository repo;
 
   UserCreateCubit() : super(UserInitialState()){
-     repo = getIt<UserRepository>();
+     repo = GetIt.I<UserRepository>();
   }
 
   void createUser(String username, String role) async {
@@ -59,7 +59,7 @@ class UserDeleteCubit extends Cubit<UserState> {
   late UserRepository repo;
 
   UserDeleteCubit() : super(UserInitialState()){
-     repo = getIt<UserRepository>();
+     repo = GetIt.I<UserRepository>();
   }
 
   void deleteUser(String username) async {
