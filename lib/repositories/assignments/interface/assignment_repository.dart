@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:project3_ui/entities/assignment.dart';
 
 import 'dart:io';
@@ -7,7 +9,7 @@ abstract class AssignmentRepository {
   Future<List<Assignment>> getPendingAssignments(int sutdentID);
 
   Future<Assignment> postAssignment(String name, String desc, DateTime dueDate,
-      List<String> inputs, List<String> outputs);
+      List<File> inputs, List<File> outputs);
 
   // TODO: add the other required methods to this interface
 

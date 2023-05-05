@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project3_ui/entities/assignment.dart';
 import 'package:project3_ui/cubits/states/assignment_state.dart';
@@ -14,13 +15,9 @@ class UploadAssignmentCubit extends Cubit<AssignmentState> {
   }
 
   Future<void> uploadAssignment(String name, DateTime dueDate, String desc,
-      List<String> inputs, List<String> outputs) async {
+      List<File> inputs, List<File> outputs) async {
     try {
-      if (name != "" &&
-          desc != "" &&
-          inputs.isNotEmpty &&
-          outputs.isNotEmpty &&
-          inputs.length == outputs.length) {
+      if (name != "" && desc != "" && inputs.isNotEmpty && outputs.isNotEmpty) {
         emit(AssignmentLoadingState());
         Assignment a =
             await repo.postAssignment(name, desc, dueDate, inputs, outputs);

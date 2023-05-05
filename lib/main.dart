@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:project3_ui/cubits/assignments/assignments_cubit.dart';
+import 'package:project3_ui/cubits/grade_reports/instructor_grade_report_cubit.dart';
 import 'package:project3_ui/cubits/grade_reports/student_grade_report_cubit.dart';
 import 'package:project3_ui/cubits/login/login_cubit.dart';
 import 'package:project3_ui/cubits/users/users_cubit.dart';

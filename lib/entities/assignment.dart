@@ -1,13 +1,15 @@
+import 'dart:io';
+
 class Assignment {
   late int id;
   late String name;
   late DateTime dueDate;
   late String desc;
-  late List<String> inputs;
-  late List<String> outputs;
+  late List<File> inputs;
+  late List<File> outputs;
 
-  Assignment(this.id, this.name, this.dueDate, this.desc,
-      {this.inputs = const [], this.outputs = const []});
+  Assignment(this.name, this.dueDate, this.desc,
+      {this.id = -1, this.inputs = const [], this.outputs = const []});
 
   Map<String, dynamic> toJson() => {
         'id': id,

@@ -26,9 +26,10 @@ class OnlineAssignmentRepository implements AssignmentRepository {
 
   @override
   Future<Assignment> postAssignment(String name, String desc, DateTime dueDate,
-      List<String> inputs, List<String> outputs) async {
+      List<File> inputs, List<File> outputs) async {
     await Future.delayed(const Duration(seconds: 1));
-    return Assignment(1, name, dueDate, desc, inputs: inputs, outputs: outputs);
+    return Assignment(
+        id: 1, name, dueDate, desc, inputs: inputs, outputs: outputs);
   }
 
   @override
