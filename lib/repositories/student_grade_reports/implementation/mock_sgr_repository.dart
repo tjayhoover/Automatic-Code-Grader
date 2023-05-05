@@ -3,7 +3,7 @@ import 'package:project3_ui/repositories/student_grade_reports/interface/student
 
 class MockSgrRepository implements StudentGradeReportRepository {
   @override
-  Future<List<GradeReport>> getGradeReports(int StudentID) async {
+  Future<List<GradeReport>> getGradeReports(int studentID) async {
     List<GradeReport> reports = [
       GradeReport(
           5, "Test my Grade Report1", DateTime.now(), DateTime.now(), "hehe", 5, 15),

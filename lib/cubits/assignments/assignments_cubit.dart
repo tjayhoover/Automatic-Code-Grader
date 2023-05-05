@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:project3_ui/entities/assignment.dart';
-import 'package:project3_ui/main.dart';
 import 'package:project3_ui/cubits/states/assignment_state.dart';
-import 'package:project3_ui/repositories/assignments/implementation/mock_assignment_repository.dart';
 import 'package:project3_ui/repositories/assignments/interface/assignment_repository.dart';
+
+import 'package:project3_ui/injection.dart';
 
 class UploadAssignmentCubit extends Cubit<AssignmentState> {
   late AssignmentRepository repo;
@@ -40,29 +39,24 @@ class UploadAssignmentCubit extends Cubit<AssignmentState> {
 }
 
 class AssignmentListCubit extends Cubit<AssignmentState> {
-  AssignmentListCubit() : super(AssignmentInitialState());
+  late AssignmentRepository assignmentRepo;
+  AssignmentListCubit() : super(AssignmentInitialState()) {
+    assignmentRepo = getIt<AssignmentRepository>();
+  }
 
-  void loadAssignments() async {
+  void loadPendingAssignments(int studentID) async {
     try {
-      final assignments = await _fetchAssignments();
+      emit(AssignmentLoadingState());
+      final assignments = await _fetchPendingAssignments(studentID);
       emit(AssignmentsLoadedState(assignments));
     } catch (e) {
       emit(AssignmentsFailureState());
     }
   }
 
-  // This is bad and just for testing.
-  // Need to depend on an abstraction, not this concrete implementation.
-  final assignmentRepo = MockAssignmentRepository();
-
   // Query the assignment repo for the pending assignments
-  Future<List<Assignment>> _fetchAssignments() async {
-    // TODO: Implement fetching of assignments from API or database
-
-    print("getting assignments");
-    var assignments = assignmentRepo.getPendingAssignments(1);
-
-    print(assignments.length);
+  Future<List<Assignment>> _fetchPendingAssignments(int studentID) async {
+    var assignments = assignmentRepo.getPendingAssignments(studentID);
     return assignments;
   }
 }

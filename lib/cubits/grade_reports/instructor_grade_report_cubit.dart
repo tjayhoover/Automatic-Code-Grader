@@ -6,6 +6,8 @@ import 'package:project3_ui/repositories/instructor_grade_reports/interface/inst
 // TODO: Currently a mock; replace with networked solution.
 import 'package:project3_ui/repositories/instructor_grade_reports/implementation/instructor_grade_report_repository_mock.dart';
 
+import 'package:project3_ui/injection.dart';
+
 class InstructorGradeReport extends Cubit<InstructorGradeReportState> {
   InstructorGradeReportRepository repo = InstructorGradeReportRepositoryMock();
 

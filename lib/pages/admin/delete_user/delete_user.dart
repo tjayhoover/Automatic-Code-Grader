@@ -6,7 +6,7 @@ import '../../../cubits/states/user_state.dart';
 import '../../../entities/user.dart';
 
 class DelUser extends StatelessWidget {
-  DelUser({super.key});
+  const DelUser({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +66,7 @@ class Main extends StatefulWidget {
 }
 
 class _Main extends State<Main> {
+  @override
   Widget build(BuildContext context) {
     return Center(
         child: ListView.separated(
