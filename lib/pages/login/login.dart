@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project3_ui/cubits/assignments/assignments_cubit.dart';
+import 'package:project3_ui/cubits/login/login_cubit.dart';
+import 'package:project3_ui/cubits/states/user_state.dart';
 
 import '../student/student_home.dart';
 import '../instructor/instructor_home.dart';
@@ -78,12 +80,57 @@ class LogInPage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 30.0),
                 child: ElevatedButton(
                   child: const Text('Log In'),
-                  onPressed: () {
-                    // userCubit.login(usrCtrl.text, pwctrl.txt);
+                  onPressed: () async {
+                    var loginCubit = BlocProvider.of<LoginCubit>(context);
+                    loginCubit.logIn(usrnmCtrl.text, pwCtrl.text);
                   },
                 ),
               ),
             ),
+            BlocConsumer<LoginCubit, UserState>(listener: (context, state) {
+              if (state is UserLoadedState) {
+                // Set the user field in the cubit
+                BlocProvider.of<LoginCubit>(context).setUser(state.user);
+                if (state.user.role == "student") {
+                  var bloc = BlocProvider.of<AssignmentListCubit>(context);
+                  bloc.loadPendingAssignments(5);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const StudentHome()),
+                  );
+                } else if (state.user.role == "instructor") {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const InstructorHome()),
+                  );
+                } else if (state.user.role == "admin") {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const AdminHome()),
+                  );
+                }
+              } else if (state is UserFailureState) {
+                showDialog<void>(
+                    context: context,
+                    builder: (BuildContext context) => const AlertDialog(
+                          title: Text('Error'),
+                          content: Text('Login failed. Try again.'),
+                        ));
+              }
+            }, builder: (context, state) {
+              if (state is UserInitialState) {
+                return const Text('');
+              } else if (state is UserLoadingState) {
+                return const Padding(
+                  padding: EdgeInsets.only(top: 20.0),
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return const Text('Unknown State');
+              }
+            }),
           ],
         ),
       ),
