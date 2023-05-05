@@ -7,8 +7,8 @@ class MockAssignmentRepository implements AssignmentRepository {
   @override
   List<Assignment> getPendingAssignments(int studentID) {
     List<Assignment> assignmentList = [
-      Assignment(1, "Test One", DateTime.now(), "This is test #1."),
-      Assignment(2, "Test2", DateTime.now(), "This is amazing"),
+      Assignment(id: 1, "Test One", DateTime.now(), "This is test #1."),
+      Assignment(id: 2, "Test2", DateTime.now(), "This is amazing"),
     ];
     return assignmentList;
   }
@@ -17,6 +17,7 @@ class MockAssignmentRepository implements AssignmentRepository {
   Future<Assignment> postAssignment(String name, String desc, DateTime dueDate,
       List<File> inputs, List<File> outputs) async {
     await Future.delayed(Duration(seconds: 1));
-    return Assignment(1, name, dueDate, desc, inputs: inputs, outputs: outputs);
+    return Assignment(
+        id: 1, name, dueDate, desc, inputs: inputs, outputs: outputs);
   }
 }

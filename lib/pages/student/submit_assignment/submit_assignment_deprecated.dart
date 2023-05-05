@@ -13,8 +13,8 @@ class SubmissionPage extends StatelessWidget {
   }
 
   final assignments = [
-    Assignment(22, "Test 1", DateTime.now(), "This is a test"),
-    Assignment(23, "Test 2", DateTime.now(), "This is the second test"),
+    Assignment(id: 22, "Test 1", DateTime.now(), "This is a test"),
+    Assignment(id: 23, "Test 2", DateTime.now(), "This is the second test"),
   ];
 
   @override

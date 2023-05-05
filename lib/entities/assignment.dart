@@ -8,8 +8,8 @@ class Assignment {
   late List<File> inputs;
   late List<File> outputs;
 
-  Assignment(this.id, this.name, this.dueDate, this.desc,
-      {this.inputs = const [], this.outputs = const []});
+  Assignment(this.name, this.dueDate, this.desc,
+      {this.id = -1, this.inputs = const [], this.outputs = const []});
 
   Map<String, dynamic> toJson() => {
         'id': id,
