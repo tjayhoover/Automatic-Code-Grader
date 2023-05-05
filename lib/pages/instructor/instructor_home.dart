@@ -24,7 +24,7 @@ class InstructorHome extends StatelessWidget {
               BlocProvider.of<UploadAssignmentCubit>(context).resetState();
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => UploadAssignment()),
+                MaterialPageRoute(builder: (context) => const UploadAssignment()),
               );
             },
           ),

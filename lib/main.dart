@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:project3_ui/cubits/assignments/assignments_cubit.dart';
 import 'package:project3_ui/cubits/grade_reports/instructor_grade_report_cubit.dart';
 import 'package:project3_ui/cubits/grade_reports/student_grade_report_cubit.dart';
+import 'package:project3_ui/cubits/login/login_cubit.dart';
 import 'package:project3_ui/cubits/users/users_cubit.dart';
 import 'package:project3_ui/repositories/assignments/implementation/mock_assignment_repository.dart';
 import 'package:project3_ui/repositories/assignments/interface/assignment_repository.dart';
@@ -11,10 +12,9 @@ import 'package:project3_ui/repositories/student_grade_reports/implementation/mo
 import 'package:project3_ui/repositories/student_grade_reports/interface/student_grade_reports_repository.dart';
 import 'package:project3_ui/repositories/users/implementation/mock_user_repository.dart';
 import 'package:project3_ui/repositories/users/interface/user_repository.dart';
-
+import 'package:project3_ui/cubits/grade_reports/instructor_grade_report_cubit.dart';
+import 'package:project3_ui/cubits/submissions/submissions_cubit.dart';
 import 'pages/login/login.dart';
-
-final GetIt getIt = GetIt.instance;
 
 void main() async {
   GetIt.I.registerSingleton<UserRepository>(MockUserRepository());
@@ -28,7 +28,9 @@ void main() async {
       BlocProvider(create: (BuildContext context) => UserDeleteCubit()),
       BlocProvider(create: (BuildContext context) => UserCreateCubit()),
       BlocProvider(create: (BuildContext context) => StudentGradeReport()),
+      BlocProvider(create: (BuildContext context) => SubmissionCubit()),
       BlocProvider(create: (BuildContext context) => InstructorGradeReport()),
+      BlocProvider(create: (BuildContext context) => LoginCubit()),
     ],
     child: MaterialApp(
       title: 'Code Grading Tool',
@@ -36,7 +38,7 @@ void main() async {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const LogInPage(),
+      home: LogInPage(),
     ),
   ));
 }

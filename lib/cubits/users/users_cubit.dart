@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:project3_ui/entities/user.dart';
 import 'package:project3_ui/cubits/states/user_state.dart';
-import 'package:project3_ui/main.dart';
 import 'package:project3_ui/repositories/users/implementation/mock_user_repository.dart';
 import 'package:project3_ui/repositories/users/interface/user_repository.dart';
+
+import 'package:project3_ui/injection.dart';
 
 class UserListCubit extends Cubit<UserState> {
   late UserRepository repo;
@@ -22,14 +22,10 @@ class UserListCubit extends Cubit<UserState> {
     }
   }
 
-  // This is bad and just for testing.
-  // Need to depend on an abstraction, not this concrete implementation.
-  final userRepo = MockUserRepository();
-
   // Query the assignment repo for the pending assignments
   Future<List<User>> _fetchUsers() async {
     // TODO: Implement fetching of assignments from API or database
-    return userRepo.getAllUsers();
+    return repo.getAllUsers();
   }
 }
 
@@ -76,6 +72,17 @@ class UserDeleteCubit extends Cubit<UserState> {
     }
   }
 
+  void getAllUsers() async{
+    try {
+      emit(UserLoadingState());
+      final list = await _getAllUsers();
+      if (list.isEmpty) throw Null;
+      emit(UsersLoadedState(list));
+    } catch (e) {
+      emit(UsersFailureState());
+    }
+  }
+
   void resetState() {
     emit(UserInitialState());
   }
@@ -88,5 +95,9 @@ class UserDeleteCubit extends Cubit<UserState> {
   Future<bool> _deleteUser(String username) async {
     // TODO: Implement fetching of assignments from API or database
     return userRepo.deleteUser(username);
+  }
+
+  Future<List<User>> _getAllUsers() async{
+      return userRepo.getAllUsers();
   }
 }

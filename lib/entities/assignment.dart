@@ -15,7 +15,7 @@ class Assignment {
         'id': id,
         'name': name,
         'dueDate': dueDate,
-        'desc': desc,
+        'description': desc,
         'inputFiles': inputs,
         'outputFiles': outputs
       };
@@ -23,8 +23,8 @@ class Assignment {
   Assignment.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    dueDate = json['dueDate'];
-    desc = json['desc'];
+    dueDate = DateTime.parse(json['dueDate']);
+    desc = json['description'];
     inputs = json['inputFiles'] ?? [];
     outputs = json['outputFiles'] ?? [];
   }
