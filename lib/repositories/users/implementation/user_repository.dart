@@ -6,8 +6,9 @@ import 'package:http/http.dart' as http;
 
 class OnlineUserRepository implements UserRepository {
   @override
-  Future<List<User>> getAllUsers() async {
-    var response = await http.get((Uri.parse('../users')), headers: {});
+  Future<List<User>> getAllUsers(int curId) async {
+    var response = await http.get((Uri.parse('../users')),
+        headers: {"Authorization": curId.toString()});
 
     // test JsonString
     //String jsonString =
@@ -19,9 +20,10 @@ class OnlineUserRepository implements UserRepository {
   }
 
   @override
-  Future<bool> createUser(String username, String role) async {
+  Future<bool> createUser(int curId, String username, String role) async {
     var response = await http.post((Uri.parse('../users')),
-        headers: {'name': username, 'role': role});
+        headers: {"Authorization": curId.toString()},
+        body: "{'name': $username, 'role': $role}");
 
     if (response.statusCode == 404) {
       return false;
@@ -30,20 +32,13 @@ class OnlineUserRepository implements UserRepository {
   }
 
   @override
-  Future<bool> deleteUser(String id) async {
+  Future<bool> deleteUser(int curId, String id) async {
     var response = await http.delete((Uri.parse('../users/$id')),
-        headers: {});
+        headers: {"Authorization": curId.toString()});
 
     if (response.statusCode == 404) {
       return false;
     }
     return true;
-  }
-
-  // to be implemented
-  @override
-  Future<User> login(String username, String password) async {
-    await Future.delayed(const Duration(seconds: 1));
-    return User(5, "String", "student");
   }
 }

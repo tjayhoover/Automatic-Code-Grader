@@ -3,7 +3,7 @@ import 'package:project3_ui/entities/user.dart';
 
 class MockUserRepository implements UserRepository {
   @override
-  Future<List<User>> getAllUsers() async{
+  Future<List<User>> getAllUsers(int curId) async{
     List<User> userList = [
       User(1, "Tyler", "student"),
       User(2, "Brandon", "student"),
@@ -13,12 +13,12 @@ class MockUserRepository implements UserRepository {
   }
 
   @override
-  Future<bool> createUser(String username, String role) async {
+  Future<bool> createUser(int curId, String username, String role) async {
     return true;
   }
 
   @override
-  Future<bool> deleteUser(String user) async {
+  Future<bool> deleteUser(int curId, String user) async {
     return true;
   }
 }
