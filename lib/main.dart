@@ -14,6 +14,7 @@ import 'package:project3_ui/repositories/assignments/interface/assignment_reposi
 import 'package:project3_ui/repositories/student_grade_reports/implementation/mock_sgr_repository.dart';
 import 'package:project3_ui/repositories/student_grade_reports/interface/student_grade_reports_repository.dart';
 import 'package:project3_ui/repositories/users/implementation/mock_user_repository.dart';
+import 'package:project3_ui/repositories/users/implementation/user_repository.dart';
 import 'package:project3_ui/repositories/users/interface/user_repository.dart';
 import 'package:project3_ui/cubits/grade_reports/instructor_grade_report_cubit.dart';
 import 'package:project3_ui/cubits/submissions/submissions_cubit.dart';

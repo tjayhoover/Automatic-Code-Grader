@@ -2,8 +2,9 @@ import 'package:project3_ui/entities/user.dart';
 
 abstract class UserRepository {
   // Returns a list of all users
-  List<User> getAllUsers();
+  Future<List<User>> getAllUsers(int curId);
 
-  bool createUser(String username, String role);
-  bool deleteUser(String username);
+  Future<bool> createUser(int curId, String username, String role);
+  Future<bool> deleteUser(int curId, String username);
+
 }

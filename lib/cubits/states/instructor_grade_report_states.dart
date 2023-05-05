@@ -9,12 +9,11 @@ class InstructorGradeReportLoadingState extends InstructorGradeReportState {
 }
 
 class InstructorGradeReportLoadedState extends InstructorGradeReportState {
-  final List<String> assignmentNames;
-  final List<AssignmentGradeReport> gradeReportList;
-  InstructorGradeReportLoadedState(this.assignmentNames, this.gradeReportList);
+  final Map<String, List<AssignmentGradeReport>> gradeReport;
+  InstructorGradeReportLoadedState(this.gradeReport);
 
   @override
-  List<Object?> get props => [assignmentNames, gradeReportList];
+  List<Object?> get props => [gradeReport];
 }
 
 class InstructorGradeReportFailureState extends InstructorGradeReportState {
