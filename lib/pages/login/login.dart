@@ -72,6 +72,18 @@ class LogInPage extends StatelessWidget {
                     controller: pwCtrl),
               ),
             ),
+            SizedBox(
+              width: 250,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 30.0),
+                child: ElevatedButton(
+                  child: const Text('Log In'),
+                  onPressed: () {
+                    // userCubit.login(usrCtrl.text, pwctrl.txt);
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),
