@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:project3_ui/url.dart';
 import 'package:project3_ui/entities/assignment.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
@@ -9,11 +9,10 @@ import 'package:project3_ui/entities/grade_report.dart';
 import 'package:project3_ui/repositories/assignments/interface/assignment_repository.dart';
 
 class HttpAssignmentRepo implements AssignmentRepository {
-  final String uri = "127.0.0.1:5455";
   @override
   Future<List<Assignment>> getPendingAssignments(int studentID) async {
     //Create the request
-    var response = await http.get((Uri.parse('/assignments/pending')),
+    var response = await http.get((Uri.parse('$serverURL/assignments/pending')),
         headers: {'Authorization': studentID.toString()});
 
     // Decode the json, turn it into a list of assignments, and return it
@@ -29,7 +28,7 @@ class HttpAssignmentRepo implements AssignmentRepository {
         Assignment(name, dueDate, desc, inputs: inputs, outputs: outputs);
     var client = http.Client();
     try {
-      var response = await client.post(Uri.parse('${uri} + /assignments'),
+      var response = await client.post(Uri.parse('$serverURL/assignments'),
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'id 1,'
@@ -51,7 +50,8 @@ class HttpAssignmentRepo implements AssignmentRepository {
   @override
   Future<List<int>> submitAssignment(
       int assignmentID, int studentID, File code) async {
-    var uri = Uri.https('/assignments/${studentID.toString()}/submit', 'create');
+    var uri =
+        Uri.https('$serverURL/assignments/${studentID.toString()}/submit', 'create');
     var request = http.MultipartRequest('POST', uri);
     // Add the user id to the header
     request.headers["Authorization"] = studentID.toString();
