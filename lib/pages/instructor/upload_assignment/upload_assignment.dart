@@ -1,12 +1,17 @@
+import 'package:universal_io/io.dart';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project3_ui/cubits/assignments/assignments_cubit.dart';
 
 import '../../../cubits/states/assignment_state.dart';
 
 class UploadAssignment extends StatefulWidget {
+  const UploadAssignment({super.key});
+
+  @override
   UploadAssignmentState createState() {
     return UploadAssignmentState();
   }
@@ -21,61 +26,81 @@ class UploadAssignmentState extends State<UploadAssignment> {
   DateTime date = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
 
+  late List<File> inputs;
+  late List<File> outputs;
+
+  @override
   void initState() {
     super.initState();
   }
 
+  @override
   void dispose() {
     super.dispose();
   }
 
+  void chooseInputs() async {
+    inputs = [];
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom, allowMultiple: true, allowedExtensions: ['txt']);
+    for (var f in result!.files) {
+      var curFile = f.bytes;
+      inputs.add(File.fromRawPath(curFile!));
+    }
+  }
+
+  void chooseOutputs() async {
+    outputs = [];
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom, allowMultiple: true, allowedExtensions: ['txt']);
+    for (var f in result!.files) {
+      var curFile = f.bytes;
+      outputs.add(File.fromRawPath(curFile!));
+    }
+  }
+
   Widget buildTextFields(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(20),
-      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+      margin: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
       child: Column(
         children: [
           TextField(
             controller: nameController,
-            decoration: InputDecoration(hintText: "Assignment name"),
+            decoration: const InputDecoration(hintText: "Assignment name"),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(10),
           ),
           buildDueDatePicker(context),
           TextField(
             controller: descController,
-            decoration: InputDecoration(hintText: "Assignment description"),
+            decoration:
+                const InputDecoration(hintText: "Assignment description"),
             maxLines: 6,
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(10),
           ),
           Row(
             children: [
-              SizedBox(
-                child: TextField(
-                  controller: inputController,
-                  decoration: InputDecoration(hintText: "Assignment inputs"),
-                  maxLines: 10,
-                ),
-                height: 300,
-                width: MediaQuery.of(context).size.width / 3,
+              ElevatedButton(
+                child: Text("Upload input files"),
+                onPressed: () {
+                  chooseInputs();
+                },
               ),
               Spacer(),
-              SizedBox(
-                child: TextField(
-                  controller: outputController,
-                  decoration: InputDecoration(hintText: "Assignment outputs"),
-                  maxLines: 10,
-                ),
-                height: 300,
-                width: MediaQuery.of(context).size.width / 3,
-              )
+              ElevatedButton(
+                child: Text("Upload output files"),
+                onPressed: () {
+                  chooseOutputs();
+                },
+              ),
             ],
           ),
           ElevatedButton(
-            child: Text("Upload Assignment"),
+            child: const Text("Upload Assignment"),
             onPressed: () {
               DateTime dueDate = DateTime(
                   date.year, date.month, date.day, time.hour, time.minute);
@@ -83,8 +108,8 @@ class UploadAssignmentState extends State<UploadAssignment> {
                   nameController.text,
                   dueDate,
                   descController.text,
-                  (inputController.text.split('\n')),
-                  (outputController.text).split('\n'));
+                  inputs,
+                  outputs);
             },
           )
         ],
@@ -94,10 +119,10 @@ class UploadAssignmentState extends State<UploadAssignment> {
 
   Widget buildDueDatePicker(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            Text("Due date"),
+            const Text("Due date"),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               ElevatedButton(
                   onPressed: () async {
@@ -113,7 +138,7 @@ class UploadAssignmentState extends State<UploadAssignment> {
                   },
                   child: Row(
                     children: [
-                      Icon(Icons.date_range),
+                      const Icon(Icons.date_range),
                       Text('Date: ${date.month}/${date.day}/${date.year}')
                     ],
                   )),
@@ -129,7 +154,7 @@ class UploadAssignmentState extends State<UploadAssignment> {
                   },
                   child: Row(
                     children: [
-                      Icon(Icons.timer),
+                      const Icon(Icons.timer),
                       Text('Time: ${time.hour}:${time.minute}')
                     ],
                   ))
@@ -142,7 +167,7 @@ class UploadAssignmentState extends State<UploadAssignment> {
     return BlocConsumer<UploadAssignmentCubit, AssignmentState>(
         listener: (context, state) {
       if (state is AssignmentLoadedState) {
-        SnackBar snackBar = SnackBar(
+        SnackBar snackBar = const SnackBar(
           content: Text("Assignment was uploaded!"),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);

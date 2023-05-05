@@ -6,6 +6,4 @@ abstract class UserRepository {
 
   bool createUser(String username, String role);
   bool deleteUser(String username);
-
-  // TODO: Supply other functions needed for this interface
 }
