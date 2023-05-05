@@ -29,9 +29,6 @@ class UploadAssignmentState extends State<UploadAssignment> {
   late List<File> inputs;
   late List<File> outputs;
 
-  late List<File> inputs;
-  late List<File> outputs;
-
   @override
   void initState() {
     super.initState();

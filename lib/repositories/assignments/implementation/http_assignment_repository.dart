@@ -9,7 +9,7 @@ import 'package:project3_ui/repositories/assignments/interface/assignment_reposi
 class HttpAssignmentRepo implements AssignmentRepository {
   final String uri = "127.0.0.1:5455";
   @override
-  List<Assignment> getPendingAssignments(int sutdentID) {
+  Future<List<Assignment>> getPendingAssignments(int sutdentID) {
     throw UnimplementedError();
   }
 
@@ -36,6 +36,13 @@ class HttpAssignmentRepo implements AssignmentRepository {
     } finally {
       client.close();
     }
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<int>> submitAssignment(
+      int assignmentID, int studentID, File code) {
+    // TODO: implement submitAssignment
     throw UnimplementedError();
   }
 }
