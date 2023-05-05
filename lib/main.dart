@@ -11,7 +11,7 @@ import 'package:project3_ui/repositories/login/implementation/mock_login_repo.da
 import 'package:project3_ui/repositories/login/implementation/http_login_repo.dart';
 import 'package:project3_ui/repositories/assignments/implementation/mock_assignment_repository.dart';
 import 'package:project3_ui/repositories/assignments/interface/assignment_repository.dart';
-import 'package:project3_ui/repositories/student_grade_reports/implementation/mock_sgr_repository.dart';
+import 'package:project3_ui/repositories/student_grade_reports/implementation/http_sgr_repo.dart';
 import 'package:project3_ui/repositories/student_grade_reports/interface/student_grade_reports_repository.dart';
 import 'package:project3_ui/repositories/users/implementation/mock_user_repository.dart';
 import 'package:project3_ui/repositories/users/implementation/user_repository.dart';
@@ -22,7 +22,7 @@ import 'pages/login/login.dart';
 
 void main() async {
   GetIt.I.registerSingleton<UserRepository>(MockUserRepository());
-  GetIt.I.registerSingleton<StudentGradeReportRepository>(MockSgrRepository());
+  GetIt.I.registerSingleton<StudentGradeReportRepository>(httpSgrRepo());
   GetIt.I.registerSingleton<AssignmentRepository>(MockAssignmentRepository());
   GetIt.I.registerSingleton<LoginRepository>(MockLoginRepository());
   runApp(MultiBlocProvider(
