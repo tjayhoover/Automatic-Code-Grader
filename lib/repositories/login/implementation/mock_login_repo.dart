@@ -9,7 +9,7 @@ class MockLoginRepository implements LoginRepository {
   Future<User?> login(String username, String password) async {
     await Future.delayed(const Duration(seconds: 1));
     if (username.length == 6) {
-      return User(5, "String", "student");
+      return User(5, username, "student");
     } else {
       return null;
     }
