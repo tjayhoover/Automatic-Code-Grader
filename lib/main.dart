@@ -36,7 +36,7 @@ void main() async {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const LogInPage(),
+      home: LogInPage(),
     ),
   ));
 }

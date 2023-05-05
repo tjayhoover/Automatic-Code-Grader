@@ -7,7 +7,10 @@ import '../instructor/instructor_home.dart';
 import '../admin/admin_home.dart';
 
 class LogInPage extends StatelessWidget {
-  const LogInPage({super.key});
+  LogInPage({super.key});
+
+  final usrnmCtrl = TextEditingController();
+  final pwCtrl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +50,27 @@ class LogInPage extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const AdminHome()),
                 );
               },
+            ),
+            SizedBox(
+              width: 300,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: TextField(
+                    decoration: const InputDecoration(hintText: 'Username'),
+                    controller: usrnmCtrl),
+              ),
+            ),
+            SizedBox(
+              width: 300,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: TextField(
+                    decoration: const InputDecoration(
+                      hintText: 'Password',
+                    ),
+                    obscureText: true,
+                    controller: pwCtrl),
+              ),
             ),
           ],
         ),
