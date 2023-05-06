@@ -11,6 +11,8 @@ import 'package:project3_ui/repositories/login/implementation/http_login_repo.da
 import 'package:project3_ui/repositories/assignments/interface/assignment_repository.dart';
 import 'package:project3_ui/repositories/student_grade_reports/implementation/http_sgr_repo.dart';
 import 'package:project3_ui/repositories/student_grade_reports/interface/student_grade_reports_repository.dart';
+import 'package:project3_ui/repositories/submissions/implementation/http_submission_repository.dart';
+import 'package:project3_ui/repositories/submissions/interface/submission_repository.dart';
 import 'package:project3_ui/repositories/users/implementation/user_repository.dart';
 import 'package:project3_ui/repositories/users/interface/user_repository.dart';
 import 'package:project3_ui/cubits/submissions/submissions_cubit.dart';
@@ -24,6 +26,7 @@ void main() async {
   GetIt.I.registerSingleton<StudentGradeReportRepository>(httpSgrRepo());
   GetIt.I.registerSingleton<AssignmentRepository>(HttpAssignmentRepo());
   GetIt.I.registerSingleton<LoginRepository>(LiveLoginRepository());
+  GetIt.I.registerSingleton<SubmissionRepository>(HTTPSubmissionRepo());
   GetIt.I.registerSingleton<InstructorGradeReportRepository>(
       InstructorGradeReportRepositoryMock());
 
