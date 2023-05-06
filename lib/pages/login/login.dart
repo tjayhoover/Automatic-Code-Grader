@@ -116,7 +116,7 @@ class LogInPage extends StatelessWidget {
                 );
               } else if (state is LoginFailureState) {
                 // TODO: What should actually be done here?
-                return const Text("");
+                return Container();
               } else {
                 return Text(state.toString());
               }

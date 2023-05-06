@@ -16,13 +16,17 @@ import 'package:project3_ui/repositories/users/interface/user_repository.dart';
 import 'package:project3_ui/cubits/submissions/submissions_cubit.dart';
 import 'pages/login/login.dart';
 import 'package:project3_ui/repositories/assignments/implementation/http_assignment_repository.dart';
+import 'package:project3_ui/repositories/instructor_grade_reports/implementation/instructor_grade_report_repository_mock.dart';
+import 'package:project3_ui/repositories/instructor_grade_reports/interface/instructor_grade_report_repository_interface.dart';
 
 void main() async {
   GetIt.I.registerSingleton<UserRepository>(OnlineUserRepository());
   GetIt.I.registerSingleton<StudentGradeReportRepository>(httpSgrRepo());
   GetIt.I.registerSingleton<AssignmentRepository>(HttpAssignmentRepo());
   GetIt.I.registerSingleton<LoginRepository>(LiveLoginRepository());
-  
+  GetIt.I.registerSingleton<InstructorGradeReportRepository>(
+      InstructorGradeReportRepositoryMock());
+
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(create: (BuildContext context) => AssignmentListCubit()),
