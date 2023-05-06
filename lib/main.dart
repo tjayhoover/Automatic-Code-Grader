@@ -15,6 +15,7 @@ import 'package:project3_ui/repositories/student_grade_reports/implementation/ht
 import 'package:project3_ui/repositories/student_grade_reports/implementation/mock_sgr_repository.dart';
 import 'package:project3_ui/repositories/student_grade_reports/interface/student_grade_reports_repository.dart';
 import 'package:project3_ui/repositories/submissions/interface/submission_repository.dart';
+import 'package:project3_ui/repositories/submissions/mock/mock_submission_repository.dart';
 import 'package:project3_ui/repositories/users/implementation/mock_user_repository.dart';
 import 'package:project3_ui/repositories/users/implementation/user_repository.dart';
 import 'package:project3_ui/repositories/users/interface/user_repository.dart';
@@ -29,6 +30,7 @@ void main() async {
   GetIt.I.registerSingleton<StudentGradeReportRepository>(MockSgrRepository());
   GetIt.I.registerSingleton<AssignmentRepository>(MockAssignmentRepository());
   GetIt.I.registerSingleton<LoginRepository>(MockLoginRepository());
+  GetIt.I.registerSingleton<SubmissionRepository>(MockSubmissionRepo());
   GetIt.I.registerSingleton<InstructorGradeReportRepository>(
       InstructorGradeReportRepositoryMock());
 
