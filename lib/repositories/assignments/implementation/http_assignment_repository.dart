@@ -19,7 +19,7 @@ class HttpAssignmentRepo implements AssignmentRepository {
       //Create the request
       var response = await http
           .get((Uri.parse('$serverURL/assignments/pending')), headers: {
-        'Authorization': studentID.toString(),
+        'Authorization': '${studentID.toString()},',
         'Accept': 'application/json'
       });
 
@@ -59,7 +59,7 @@ class HttpAssignmentRepo implements AssignmentRepository {
           'inputFiles', await inputs[0].readAsBytes()));
       request.files.add(http.MultipartFile.fromBytes(
           'outputFiles', await outputs[0].readAsBytes()));
-      request.headers['Authorization'] = 'id: $id,';
+      request.headers['Authorization'] = '$id,';
       request.headers['Content-Type'] = 'application/json';
       request.send().then((response) {
         if (response.statusCode == 201) {

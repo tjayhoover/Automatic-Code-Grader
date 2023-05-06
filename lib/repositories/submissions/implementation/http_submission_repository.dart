@@ -7,15 +7,16 @@ import 'dart:convert';
 
 class HTTPSubmissionRepo implements SubmissionRepository {
   @override
-  Future<List<int>> submitAssignment(int aID, int sID, File code) async {
+  Future<List<int>> submitAssignment(
+      int assignmentID, int studentID, File code) async {
     try {
       // Create the request
       var uri = Uri.https(
-          '$serverURL/assignments/${aID.toString()}/submit', 'create');
+          '$serverURL/assignments/${assignmentID.toString()}/submit', 'create');
       var request = http.MultipartRequest('POST', uri);
 
       // Fill out the headers with the right info
-      request.headers["Authorization"] = sID.toString();
+      request.headers["Authorization"] = '${studentID.toString()},';
       request.headers["Accept"] = 'application/json';
 
       // Add the code file
