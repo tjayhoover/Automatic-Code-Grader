@@ -36,7 +36,7 @@ class AssignmentView extends StatelessWidget {
                 style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w500,
-                    fontSize: 40),
+                    fontSize: 30),
               )),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -139,10 +139,7 @@ class AssignmentView extends StatelessWidget {
                     var subCubit = BlocProvider.of<SubmissionCubit>(context);
                     var assignmentCubit =
                         BlocProvider.of<AssignmentListCubit>(context);
-                    final File file = File('../temp.py');
-                    await file.writeAsString(txt.text);
-                    subCubit.submitAssignment(_assignment.id, file);
-
+                    subCubit.submitAssignment(_assignment.id, txt.text);
                     // Reload the list of pending assignments
                     assignmentCubit.loadPendingAssignments();
                   },
@@ -160,9 +157,7 @@ class AssignmentView extends StatelessWidget {
                     var subCubit = BlocProvider.of<SubmissionCubit>(context);
                     var assignmentCubit =
                         BlocProvider.of<AssignmentListCubit>(context);
-                    final File file = File('../temp.py');
-                    await file.writeAsString(txt.text);
-                    subCubit.submitAssignment(_assignment.id, file);
+                    subCubit.submitAssignment(_assignment.id, txt.text);
 
                     // Reload the list of pending assignments
                     assignmentCubit.loadPendingAssignments();

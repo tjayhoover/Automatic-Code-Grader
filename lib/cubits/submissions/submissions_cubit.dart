@@ -11,7 +11,7 @@ class SubmissionCubit extends Cubit<SubmissionState> {
   SubmissionCubit() : super(SubmissionInitialState()) {
     submissionRepo = GetIt.I<SubmissionRepository>();
   }
-  void submitAssignment(int assignmentID, File code) async {
+  void submitAssignment(int assignmentID, String code) async {
     try {
       emit(SubmissionLoadingState());
       var user = GetIt.I<LoginRepository>().getCurrentUser();
@@ -31,7 +31,7 @@ class SubmissionCubit extends Cubit<SubmissionState> {
   }
 
   Future<List<int>> _submitAssignment(
-      int assignmentID, int studentID, File code) async {
+      int assignmentID, int studentID, String code) async {
     return submissionRepo.submitAssignment(assignmentID, studentID, code);
   }
 }
