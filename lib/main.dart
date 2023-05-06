@@ -6,10 +6,13 @@ import 'package:project3_ui/cubits/grade_reports/instructor_grade_report_cubit.d
 import 'package:project3_ui/cubits/grade_reports/student_grade_report_cubit.dart';
 import 'package:project3_ui/cubits/login/login_cubit.dart';
 import 'package:project3_ui/cubits/users/users_cubit.dart';
+import 'package:project3_ui/repositories/assignments/implementation/mock_assignment_repository.dart';
 import 'package:project3_ui/repositories/login/interface/login_repository.dart';
 import 'package:project3_ui/repositories/login/implementation/http_login_repo.dart';
 import 'package:project3_ui/repositories/assignments/interface/assignment_repository.dart';
+import 'package:project3_ui/repositories/login/mock/mock_login_repo.dart';
 import 'package:project3_ui/repositories/student_grade_reports/implementation/http_sgr_repo.dart';
+import 'package:project3_ui/repositories/student_grade_reports/implementation/mock_sgr_repository.dart';
 import 'package:project3_ui/repositories/student_grade_reports/interface/student_grade_reports_repository.dart';
 import 'package:project3_ui/repositories/submissions/implementation/http_submission_repository.dart';
 import 'package:project3_ui/repositories/submissions/interface/submission_repository.dart';
