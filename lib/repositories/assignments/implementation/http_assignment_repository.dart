@@ -7,7 +7,6 @@ import 'package:project3_ui/entities/assignment.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
-import 'package:project3_ui/entities/grade_report.dart';
 
 import 'package:project3_ui/repositories/assignments/interface/assignment_repository.dart';
 import 'package:project3_ui/repositories/login/implementation/http_login_repo.dart';
@@ -50,7 +49,7 @@ class HttpAssignmentRepo implements AssignmentRepository {
     Assignment a = Assignment(name, dueDate, desc);
     var client = http.Client();
     try {
-      var request = new http.MultipartRequest(
+      var request = http.MultipartRequest(
           "POST", Uri.parse('$serverURL/assignments'));
       request.fields['name'] = name;
       request.fields['dueDate'] = dueDate.toString();

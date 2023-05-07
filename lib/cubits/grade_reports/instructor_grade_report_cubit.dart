@@ -5,7 +5,6 @@ import 'package:project3_ui/entities/assignment_grade_report.dart';
 import 'package:project3_ui/repositories/instructor_grade_reports/interface/instructor_grade_report_repository_interface.dart';
 
 // TODO: Currently a mock; replace with networked solution.
-import 'package:project3_ui/repositories/instructor_grade_reports/implementation/instructor_grade_report_repository_mock.dart';
 
 class InstructorGradeReport extends Cubit<InstructorGradeReportState> {
   late InstructorGradeReportRepository repo;
