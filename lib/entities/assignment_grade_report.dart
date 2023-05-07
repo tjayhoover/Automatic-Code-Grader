@@ -10,4 +10,22 @@ class AssignmentGradeReport {
 
   AssignmentGradeReport(this.studentID, this.studentName, this.submissionDate,
       this.casesPassed, this.totalCases);
+
+  Map<String, dynamic> toJson() {
+    return {
+      'userid': studentID,
+      'username': studentName,
+      'dateSubmitted': submissionDate.toIso8601String(),
+      'casesPassed': casesPassed,
+      'totalCases': totalCases,
+    };
+  }
+
+  AssignmentGradeReport.fromJson(Map<String, dynamic> json) {
+    studentID = json['userid'];
+    studentName = json['username'];
+    submissionDate = DateTime.parse(json['dateSubmitted']);
+    casesPassed = json['casesPassed'];
+    totalCases = json['totalCases'];
+  }
 }
