@@ -15,10 +15,10 @@ class StudentGradeReport extends Cubit<StudentGradeReportState> {
   void reportRequested() async {
     emit(StudentGradeReportLoadingState());
     //load reports from server
-    bool success = true;
+    
     List<GradeReport> reports = await repo.getGradeReports(1);
-    //TODO figure out id numbers
-    if (success) {
+    
+    if (reports.isNotEmpty) {
       emit(StudentGradeReportLoadedState(reports));
     } else {
       emit(StudentGradeReportFailureState());
