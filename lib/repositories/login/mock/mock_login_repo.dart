@@ -8,10 +8,10 @@ class MockLoginRepository implements LoginRepository {
   @override
   Future<User?> login(String username, String password) async {
     await Future.delayed(const Duration(seconds: 1));
-    if (username.length == 6) {
-      return User(5, username, "student");
-    } else {
+    if (username.length == 7) {
       return null;
+    } else {
+      return User(username.length, username, password);
     }
   }
 

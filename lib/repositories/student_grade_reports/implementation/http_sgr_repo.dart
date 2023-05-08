@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:project3_ui/url.dart';
 
-class httpSgrRepo implements StudentGradeReportRepository {
+class HttpSgrRepo implements StudentGradeReportRepository {
   @override
   Future<List<GradeReport>> getGradeReports(int studentID) async {
     var response = await http.get(

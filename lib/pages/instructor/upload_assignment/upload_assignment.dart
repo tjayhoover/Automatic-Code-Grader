@@ -1,7 +1,6 @@
 import 'package:universal_io/io.dart';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project3_ui/cubits/assignments/assignments_cubit.dart';
@@ -85,14 +84,14 @@ class UploadAssignmentState extends State<UploadAssignment> {
           Row(
             children: [
               ElevatedButton(
-                child: Text("Upload input file"),
+                child: const Text("Upload input file"),
                 onPressed: () {
                   chooseInputs();
                 },
               ),
-              Spacer(),
+              const Spacer(),
               ElevatedButton(
-                child: Text("Upload output file"),
+                child: const Text("Upload output file"),
                 onPressed: () {
                   chooseOutputs();
                 },

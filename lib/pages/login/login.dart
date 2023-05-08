@@ -68,7 +68,7 @@ class LogInPage extends StatelessWidget {
             ),
             BlocConsumer<LoginCubit, LoginState>(listener: (context, state) {
               if (state is LoginSuccessState) {
-                if (state.loggedInUser.role == "student") {
+                if (state.loggedInUser.role.toLowerCase() == "student") {
                   var bloc = BlocProvider.of<AssignmentListCubit>(context);
                   bloc.loadPendingAssignments();
                   Navigator.push(
@@ -76,13 +76,14 @@ class LogInPage extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => const StudentHome()),
                   );
-                } else if (state.loggedInUser.role == "instructor") {
+                } else if (state.loggedInUser.role.toLowerCase() ==
+                    "instructor") {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const InstructorHome()),
                   );
-                } else if (state.loggedInUser.role == "admin") {
+                } else if (state.loggedInUser.role.toLowerCase() == "admin") {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const AdminHome()),
@@ -115,7 +116,7 @@ class LogInPage extends StatelessWidget {
                 );
               } else if (state is LoginFailureState) {
                 // TODO: What should actually be done here?
-                return const Text("");
+                return Container();
               } else {
                 return Text(state.toString());
               }
