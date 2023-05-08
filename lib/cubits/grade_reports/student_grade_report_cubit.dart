@@ -6,7 +6,6 @@ import '../states/student_grade_report_state.dart';
 import 'package:get_it/get_it.dart';
 
 class StudentGradeReport extends Cubit<StudentGradeReportState> {
-
   late StudentGradeReportRepository repo;
 
   StudentGradeReport() : super(StudentGradeReportInitialState()) {
@@ -17,10 +16,13 @@ class StudentGradeReport extends Cubit<StudentGradeReportState> {
     emit(StudentGradeReportLoadingState());
     //load reports from server
     var user = GetIt.I<LoginRepository>().getCurrentUser();
-    List<GradeReport> reports = await repo.getGradeReports(user.id);
-    
-    if (reports.isNotEmpty) {
-      emit(StudentGradeReportLoadedState(reports));
+    if (user != null) {
+      List<GradeReport> reports = await repo.getGradeReports(user.id);
+      if (reports.isNotEmpty) {
+        emit(StudentGradeReportLoadedState(reports));
+      } else {
+        emit(StudentGradeReportFailureState());
+      }
     } else {
       emit(StudentGradeReportFailureState());
     }
