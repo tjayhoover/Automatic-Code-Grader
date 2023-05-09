@@ -4,7 +4,7 @@ import 'package:project3_ui/repositories/instructor_grade_reports/interface/inst
 class InstructorGradeReportRepositoryMock
     implements InstructorGradeReportRepository {
   @override
-  Future<List<AssignmentGradeReport>> getAllReports(String assignment) async {
+  Future<List<AssignmentGradeReport>> getAllReports(String assignment, int curId) async {
     List<AssignmentGradeReport> gradeReport = [
       AssignmentGradeReport(
           1,
@@ -19,7 +19,7 @@ class InstructorGradeReportRepositoryMock
   }
 
   @override
-  Future<List<String>> getAllAssignmentNames() async {
+  Future<List<String>> getAllAssignmentNames(int curId) async {
     List<String> assignmentList = [
       "Hello, World!",
       "Volim",

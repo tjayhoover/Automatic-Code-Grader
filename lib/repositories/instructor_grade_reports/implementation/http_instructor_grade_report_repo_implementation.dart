@@ -8,18 +8,18 @@ import 'package:project3_ui/url.dart';
 class HTTPInstructorGradeReportRepository
     implements InstructorGradeReportRepository {
   @override
-  Future<List<AssignmentGradeReport>> getAllReports(String assignment) async {
+  Future<List<AssignmentGradeReport>> getAllReports(String assignment, int curId) async {
     // Two requests are required to complete this. Firstly, we must request
     // a list of all assignments. Then we must find the correct one that matches
     // with our assignment name, and make a second request for its grade report.
     var assignmentResponse = await http.get(
       Uri.parse('$serverURL/assignments'),
       // TODO: Does the server require authorization to GET the assignment list?
-      //headers: {}
+      headers: {"Authorization": '${curId.toString()},'}
     );
 
     // TODO: Is 201 the correct response code for a successful GET?
-    if (assignmentResponse.statusCode == 201) {
+    if (assignmentResponse.statusCode == 200) {
       List<Assignment> assignmentList =
           (json.decode(assignmentResponse.body) as List)
               .map((e) => Assignment.fromJson(e))
@@ -36,10 +36,10 @@ class HTTPInstructorGradeReportRepository
         Uri.parse('$serverURL/assignment/$targetID/report'),
         // TODO: We almost definitely need authorization for this endpoint,
         // right? So, how do we gain access to the current user from here?
-        // headers: {}
+        headers: {"Authorization": '${curId.toString()},'}
       );
 
-      if (gradeResponse.statusCode == 201) {
+      if (gradeResponse.statusCode == 200) {
         return (json.decode(gradeResponse.body) as List)
             .map((e) => AssignmentGradeReport.fromJson(e))
             .toList();
@@ -54,15 +54,15 @@ class HTTPInstructorGradeReportRepository
   }
 
   @override
-  Future<List<String>> getAllAssignmentNames() async {
+  Future<List<String>> getAllAssignmentNames(int curId) async {
     var assignmentResponse = await http.get(
       Uri.parse('$serverURL/assignments'),
       // TODO: Does the server require authorization to GET the assignment list?
-      //headers: {}
+      headers: {"Authorization": '${curId.toString()},'}
     );
 
     // TODO: Is 201 the correct response code for a successful GET?
-    if (assignmentResponse.statusCode == 201) {
+    if (assignmentResponse.statusCode == 200) {
       return (json.decode(assignmentResponse.body) as List)
           .map((e) => Assignment.fromJson(e).name)
           .toList();
