@@ -10,11 +10,11 @@ class httpSgrRepo implements StudentGradeReportRepository {
     try {
       var response = await http
           .get((Uri.parse('$serverURL/assignments/completed')), headers: {
-        'Authorization': studentID.toString(),
+        'Authorization': '${studentID.toString()},',
         "Accept": "application/json"
       });
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         // Decode the json, turn it into a list of assignments, and return it
         return (json.decode(response.body) as List)
             .map((i) => GradeReport.fromJson(i))
