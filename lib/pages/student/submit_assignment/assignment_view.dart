@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'dart:io';
 
 import 'package:project3_ui/cubits/submissions/submissions_cubit.dart';
+import 'package:project3_ui/cubits/assignments/assignments_cubit.dart';
 import 'package:project3_ui/cubits/states/submission_state.dart';
 import 'package:project3_ui/entities/assignment.dart';
 
@@ -35,7 +36,7 @@ class AssignmentView extends StatelessWidget {
                 style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w500,
-                    fontSize: 40),
+                    fontSize: 30),
               )),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -136,9 +137,11 @@ class AssignmentView extends StatelessWidget {
                   child: const Text('Submit Assignment'),
                   onPressed: () async {
                     var subCubit = BlocProvider.of<SubmissionCubit>(context);
-                    final File file = File('../temp.py');
-                    await file.writeAsString(txt.text);
-                    subCubit.submitAssignment(_assignment.id, file);
+                    var assignmentCubit =
+                        BlocProvider.of<AssignmentListCubit>(context);
+                    subCubit.submitAssignment(_assignment.id, txt.text);
+                    // Reload the list of pending assignments
+                    assignmentCubit.loadPendingAssignments();
                   },
                 );
               } else if (state is SubmissionLoadingState) {
@@ -152,9 +155,12 @@ class AssignmentView extends StatelessWidget {
                   child: const Text('Resubmit Assignment'),
                   onPressed: () async {
                     var subCubit = BlocProvider.of<SubmissionCubit>(context);
-                    final File file = File('../temp.py');
-                    await file.writeAsString(txt.text);
-                    subCubit.submitAssignment(_assignment.id, file);
+                    var assignmentCubit =
+                        BlocProvider.of<AssignmentListCubit>(context);
+                    subCubit.submitAssignment(_assignment.id, txt.text);
+
+                    // Reload the list of pending assignments
+                    assignmentCubit.loadPendingAssignments();
                   },
                 );
               } else if (state is SubmissionFailureState) {

@@ -4,7 +4,7 @@ import 'package:project3_ui/entities/user.dart';
 import 'package:project3_ui/repositories/users/interface/user_repository.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../url.dart';
+import 'package:project3_ui/url.dart';
 
 class OnlineUserRepository implements UserRepository {
   @override
