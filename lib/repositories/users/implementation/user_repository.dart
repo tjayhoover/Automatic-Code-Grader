@@ -10,7 +10,7 @@ class OnlineUserRepository implements UserRepository {
   @override
   Future<List<User>> getAllUsers(int curId) async {
     var response = await http.get((Uri.parse('$serverURL/users')),
-        headers: {"Authorization": curId.toString()});
+        headers: {"Authorization": '${curId.toString()},'});
 
     // test JsonString
     //String jsonString =
@@ -24,23 +24,23 @@ class OnlineUserRepository implements UserRepository {
   @override
   Future<bool> createUser(int curId, String username, String role) async {
     var response = await http.post((Uri.parse('$serverURL/users')),
-        headers: {"Authorization": curId.toString()},
+        headers: {"Authorization": '${curId.toString()},'},
         body: "{'name': $username, 'role': $role}");
 
-    if (response.statusCode == 404) {
-      return false;
+    if (response.statusCode == 201) {
+      return true;
     }
-    return true;
+    return false;
   }
 
   @override
   Future<bool> deleteUser(int curId, String id) async {
     var response = await http.delete((Uri.parse('$serverURL/users/$id')),
-        headers: {"Authorization": curId.toString()});
+        headers: {"Authorization": '${curId.toString()},'});
 
-    if (response.statusCode == 404) {
-      return false;
+    if (response.statusCode == 204) {
+      return true;
     }
-    return true;
+    return false;
   }
 }

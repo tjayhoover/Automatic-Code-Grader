@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:project3_ui/entities/assignment.dart';
 import 'package:project3_ui/repositories/assignments/interface/assignment_repository.dart';
-import 'dart:io';
 
 class MockAssignmentRepository implements AssignmentRepository {
   @override
@@ -37,7 +36,7 @@ class MockAssignmentRepository implements AssignmentRepository {
   @override
   Future<Assignment> postAssignment(String name, String desc, DateTime dueDate,
       List<File> inputs, List<File> outputs) async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     return Assignment(
         id: 1, name, dueDate, desc, inputs: inputs, outputs: outputs);
   }

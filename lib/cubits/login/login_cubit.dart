@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project3_ui/cubits/states/login_state.dart';
 import 'package:project3_ui/repositories/login/interface/login_repository.dart';
 import 'package:get_it/get_it.dart';
-import 'package:project3_ui/repositories/users/interface/user_repository.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   late LoginRepository loginRepo;

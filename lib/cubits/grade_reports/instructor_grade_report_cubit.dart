@@ -3,9 +3,9 @@ import 'package:get_it/get_it.dart';
 import 'package:project3_ui/cubits/states/instructor_grade_report_states.dart';
 import 'package:project3_ui/entities/assignment_grade_report.dart';
 import 'package:project3_ui/repositories/instructor_grade_reports/interface/instructor_grade_report_repository_interface.dart';
+import 'package:project3_ui/repositories/login/interface/login_repository.dart';
 
 // TODO: Currently a mock; replace with networked solution.
-import 'package:project3_ui/repositories/instructor_grade_reports/implementation/instructor_grade_report_repository_mock.dart';
 
 class InstructorGradeReport extends Cubit<InstructorGradeReportState> {
   late InstructorGradeReportRepository repo;
@@ -15,22 +15,24 @@ class InstructorGradeReport extends Cubit<InstructorGradeReportState> {
   }
 
   void loadReport() async {
-    emit(InstructorGradeReportLoadingState());
+    try {
+      emit(InstructorGradeReportLoadingState());
 
-    Map<String, List<AssignmentGradeReport>> gradeReport = {};
-    final List<String> assignmentNames = await repo.getAllAssignmentNames();
+      var user = GetIt.I<LoginRepository>().getCurrentUser();
 
-    for (int i = 0; i < assignmentNames.length; ++i) {
-      gradeReport[assignmentNames[i]] =
-          await repo.getAllReports(assignmentNames[i]);
-    }
+      if (user != null) {
+        Map<String, List<AssignmentGradeReport>> gradeReport = {};
+        final List<String> assignmentNames = await repo.getAllAssignmentNames(user.id);
 
-    // TODO: Check for success in the networked solution; for now we assume
-    // the request always succeeds.
-
-    if (true) {
-      emit(InstructorGradeReportLoadedState(gradeReport));
-    } else {
+        for (int i = 0; i < assignmentNames.length; ++i) {
+          gradeReport[assignmentNames[i]] =
+              await repo.getAllReports(assignmentNames[i], user.id);
+        }
+        emit(InstructorGradeReportLoadedState(gradeReport));
+      } else {
+        emit(InstructorGradeReportFailureState());
+      }
+    } catch (e) {
       emit(InstructorGradeReportFailureState());
     }
   }

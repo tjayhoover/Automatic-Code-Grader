@@ -28,6 +28,7 @@ class LiveLoginRepository implements LoginRepository {
     } catch (e) {
       // Debug output
       print(e);
+      return null;
     }
   }
 

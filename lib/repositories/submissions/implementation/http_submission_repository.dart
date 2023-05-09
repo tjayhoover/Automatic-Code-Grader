@@ -8,8 +8,12 @@ import 'dart:convert';
 class HTTPSubmissionRepo implements SubmissionRepository {
   @override
   Future<List<int>> submitAssignment(
-      int assignmentID, int studentID, File code) async {
+      int assignmentID, int studentID, String code) async {
     try {
+      // Write the string to a temporary file
+      final File file = File('../temp.py');
+      await file.writeAsString(code);
+
       // Create the request
       var uri = Uri.https(
           '$serverURL/assignments/${assignmentID.toString()}/submit', 'create');
@@ -21,7 +25,7 @@ class HTTPSubmissionRepo implements SubmissionRepository {
 
       // Add the code file
       request.files
-          .add(await http.MultipartFile.fromPath('package', code.path));
+          .add(await http.MultipartFile.fromPath('package', file.path));
 
       // Send the request
       var response = await request.send();
