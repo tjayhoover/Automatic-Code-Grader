@@ -23,7 +23,7 @@ class HttpAssignmentRepo implements AssignmentRepository {
       });
 
       // Decode the json, turn it into a list of assignments, and return it
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         return (json.decode(response.body) as List)
             .map((i) => Assignment.fromJson(i))
             .toList();

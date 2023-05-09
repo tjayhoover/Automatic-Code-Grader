@@ -14,7 +14,7 @@ class HttpSgrRepo implements StudentGradeReportRepository {
         "Accept": "application/json"
       });
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         // Decode the json, turn it into a list of assignments, and return it
         return (json.decode(response.body) as List)
             .map((i) => GradeReport.fromJson(i))
