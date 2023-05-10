@@ -5,8 +5,8 @@ class Assignment {
   late String name;
   late DateTime dueDate;
   late String desc;
-  late List<File> inputs;
-  late List<File> outputs;
+  late List<String> inputs;
+  late List<String> outputs;
 
   Assignment(this.name, this.dueDate, this.desc,
       {this.id = -1, this.inputs = const [], this.outputs = const []});

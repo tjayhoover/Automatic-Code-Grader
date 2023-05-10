@@ -10,18 +10,20 @@ import 'package:project3_ui/repositories/login/interface/login_repository.dart';
 
 class UploadAssignmentCubit extends Cubit<AssignmentState> {
   late AssignmentRepository repo;
+  late int id;
 
   UploadAssignmentCubit() : super(AssignmentInitialState()) {
     repo = GetIt.I<AssignmentRepository>();
+    id = GetIt.I<LoginRepository>().getCurrentUser()!.id;
   }
 
   Future<void> uploadAssignment(String name, DateTime dueDate, String desc,
-      List<File> inputs, List<File> outputs) async {
+      List<String> inputs, List<String> outputs) async {
     try {
       if (name != "" && desc != "" && inputs.isNotEmpty && outputs.isNotEmpty) {
         emit(AssignmentLoadingState());
         Assignment a =
-            await repo.postAssignment(name, desc, dueDate, inputs, outputs);
+            await repo.postAssignment(name, desc, dueDate, inputs, outputs, id);
         emit(AssignmentLoadedState(a));
       } else {
         emit(AssignmentFailureState());
