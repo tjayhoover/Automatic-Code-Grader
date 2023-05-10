@@ -19,9 +19,9 @@ class GradeReport {
       };
 
   GradeReport.fromJson(Map<String, dynamic> json) {
-    id = json['userid'];
-    name = json['username'];
-    submissionDate = DateTime.parse(json['dateSubmitted']);
+    id = json['id'];
+    name = json['name'];
+    submissionDate = DateTime.parse(json['dueDate']);
     casesPassed = json['casesPassed'];
     totalCases = json['totalCases'];
   }
