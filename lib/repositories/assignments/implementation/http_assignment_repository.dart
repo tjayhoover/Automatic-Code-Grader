@@ -7,7 +7,6 @@ import 'package:project3_ui/entities/assignment.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
-
 import 'package:project3_ui/repositories/assignments/interface/assignment_repository.dart';
 import 'package:project3_ui/repositories/login/implementation/http_login_repo.dart';
 
@@ -44,40 +43,27 @@ class HttpAssignmentRepo implements AssignmentRepository {
 
   @override
   Future<Assignment> postAssignment(String name, String desc, DateTime dueDate,
-      List<File> inputs, List<File> outputs) async {
-    int id = GetIt.I<LiveLoginRepository>().getCurrentUser()!.id;
+      List<String> inputs, List<String> outputs, int id) async {
     Assignment a = Assignment(name, dueDate, desc);
     var client = http.Client();
     try {
-      var request = http.MultipartRequest(
-          "POST", Uri.parse('$serverURL/assignments'));
-      request.fields['name'] = name;
-      request.fields['dueDate'] = dueDate.toString();
-      request.fields['desc'] = desc;
-      request.files.add(http.MultipartFile.fromBytes(
-          'inputFiles', await inputs[0].readAsBytes()));
-      request.files.add(http.MultipartFile.fromBytes(
-          'outputFiles', await outputs[0].readAsBytes()));
-      request.headers['Authorization'] = '$id,';
-      request.headers['Content-Type'] = 'application/json';
-      request.headers['Accept'] = 'application/json';
-      request.send().then((response) async {
-        if (response.statusCode == 201) {
-          var responseStream = await http.Response.fromStream(response);
-          final Assignment body =
-              Assignment.fromJson(json.decode(responseStream.body));
-          return body;
-        } else {
-          throw Exception("Could not post assignment");
-        }
-      });
-      return a;
+      var response = await http.post((Uri.parse('$serverURL/login')),
+          body: jsonEncode(a.toJson()),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': '$id,'
+          });
+      if (response.statusCode == 201) {
+        final Assignment body = Assignment.fromJson(json.decode(response.body));
+        return body;
+      } else {
+        throw Exception("Could not post assignment");
+      }
     } catch (e) {
       rethrow;
     } finally {
       client.close();
     }
   }
-
-  
 }
