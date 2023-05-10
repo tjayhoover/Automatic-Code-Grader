@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:project3_ui/url.dart';
 
-class OnlineUserRepository implements UserRepository {
+class HTTPUserRepository implements UserRepository {
   @override
   Future<List<User>> getAllUsers(int curId) async {
     var response = await http.get((Uri.parse('$serverURL/users')), headers: {

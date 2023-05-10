@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:project3_ui/cubits/states/instructor_grade_report_states.dart';
 import 'package:project3_ui/entities/assignment_grade_report.dart';
-import 'package:project3_ui/repositories/instructor_grade_reports/interface/instructor_grade_report_repository_interface.dart';
+import 'package:project3_ui/repositories/instructor_grade_reports/interface/instructor_grade_report_repository.dart';
 import 'package:project3_ui/repositories/login/interface/login_repository.dart';
 
 // TODO: Currently a mock; replace with networked solution.

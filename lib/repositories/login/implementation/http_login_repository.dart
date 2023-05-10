@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:project3_ui/url.dart';
 
-class LiveLoginRepository implements LoginRepository {
+class HTTPLoginRepository implements LoginRepository {
   @override
   User? user;
 

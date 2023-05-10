@@ -8,7 +8,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 import 'package:project3_ui/repositories/assignments/interface/assignment_repository.dart';
-import 'package:project3_ui/repositories/login/implementation/http_login_repo.dart';
+import 'package:project3_ui/repositories/login/implementation/http_login_repository.dart';
 
 class HttpAssignmentRepo implements AssignmentRepository {
   @override
