@@ -14,7 +14,7 @@ class Assignment {
   Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
-        'dueDate': dueDate,
+        'dueDate': dueDate.toIso8601String(),
         'description': desc,
         'inputFiles': inputs,
         'outputFiles': outputs

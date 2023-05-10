@@ -1,14 +1,10 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
-import 'package:get_it/get_it.dart';
 import 'package:project3_ui/url.dart';
 import 'package:project3_ui/entities/assignment.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-
 import 'package:project3_ui/repositories/assignments/interface/assignment_repository.dart';
-import 'package:project3_ui/repositories/login/implementation/http_login_repository.dart';
 
 class HttpAssignmentRepo implements AssignmentRepository {
   @override
@@ -45,15 +41,18 @@ class HttpAssignmentRepo implements AssignmentRepository {
   Future<Assignment> postAssignment(String name, String desc, DateTime dueDate,
       List<String> inputs, List<String> outputs, int id) async {
     Assignment a = Assignment(name, dueDate, desc);
-    var client = http.Client();
+
+    print("posting assignments");
     try {
-      var response = await http.post((Uri.parse('$serverURL/login')),
+      var response = await http.post((Uri.parse('$serverURL/assignments')),
           body: jsonEncode(a.toJson()),
           headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             'Authorization': '$id,'
           });
+      print("Cooper response");
+      print(response.statusCode.toString());
       if (response.statusCode == 201) {
         final Assignment body = Assignment.fromJson(json.decode(response.body));
         return body;
@@ -61,9 +60,8 @@ class HttpAssignmentRepo implements AssignmentRepository {
         throw Exception("Could not post assignment");
       }
     } catch (e) {
+      print(e);
       rethrow;
-    } finally {
-      client.close();
     }
   }
 }

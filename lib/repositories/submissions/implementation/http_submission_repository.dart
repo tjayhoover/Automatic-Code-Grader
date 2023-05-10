@@ -1,8 +1,8 @@
+import 'package:project3_ui/entities/assignment_grade_report.dart';
 import 'package:project3_ui/repositories/submissions/interface/submission_repository.dart';
 import 'package:project3_ui/url.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
-import 'package:project3_ui/entities/grade_report.dart';
 import 'dart:convert';
 
 class HTTPSubmissionRepo implements SubmissionRepository {
@@ -50,7 +50,7 @@ class HTTPSubmissionRepo implements SubmissionRepository {
         print("total Cases");
         print(parsed["totalCases"]);
 
-        final GradeReport gr = GradeReport.fromJson(parsed);
+        final AssignmentGradeReport gr = AssignmentGradeReport.fromJson(parsed);
         return [gr.casesPassed, gr.totalCases];
       }
 
