@@ -39,7 +39,8 @@ class HttpAssignmentRepo implements AssignmentRepository {
   @override
   Future<Assignment> postAssignment(String name, String desc, DateTime dueDate,
       List<String> inputs, List<String> outputs, int id) async {
-    Assignment a = Assignment(name, dueDate, desc);
+    Assignment a =
+        Assignment(name, dueDate, desc, inputs: inputs, outputs: outputs);
 
     try {
       var response = await http.post((Uri.parse('$serverURL/assignments')),

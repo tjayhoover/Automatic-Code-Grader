@@ -25,8 +25,8 @@ class UploadAssignmentState extends State<UploadAssignment> {
   DateTime date = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
 
-  late List<String> inputs;
-  late List<String> outputs;
+  List<String> inputs = [];
+  List<String> outputs = [];
 
   @override
   void initState() {
@@ -111,8 +111,11 @@ class UploadAssignmentState extends State<UploadAssignment> {
                 onPressed: () async {
                   String? path = await chooseCodeFile();
                   File(path!).readAsString().then((String contents) {
+                    //just trust me bro
                     inputController.text = contents;
-                    inputs = contents.split("\n");
+                    inputs = contents.split("\r\n").length > 1
+                        ? contents.split("\r\n")
+                        : [contents];
                   });
                 },
               ),
@@ -123,7 +126,10 @@ class UploadAssignmentState extends State<UploadAssignment> {
                   String? path = await chooseCodeFile();
                   File(path!).readAsString().then((String contents) {
                     outputController.text = contents;
-                    outputs = contents.split("\n");
+                    //just trust me bro
+                    outputs = contents.split("\r\n").length > 1
+                        ? contents.split("\r\n")
+                        : [contents];
                   });
                 },
               ),
@@ -134,6 +140,7 @@ class UploadAssignmentState extends State<UploadAssignment> {
             onPressed: () {
               DateTime dueDate = DateTime(
                   date.year, date.month, date.day, time.hour, time.minute);
+
               BlocProvider.of<UploadAssignmentCubit>(context).uploadAssignment(
                   nameController.text,
                   dueDate,
