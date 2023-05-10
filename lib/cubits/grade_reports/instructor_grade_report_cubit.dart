@@ -5,8 +5,6 @@ import 'package:project3_ui/entities/assignment_grade_report.dart';
 import 'package:project3_ui/repositories/instructor_grade_reports/interface/instructor_grade_report_repository_interface.dart';
 import 'package:project3_ui/repositories/login/interface/login_repository.dart';
 
-// TODO: Currently a mock; replace with networked solution.
-
 class InstructorGradeReport extends Cubit<InstructorGradeReportState> {
   late InstructorGradeReportRepository repo;
 
@@ -22,7 +20,8 @@ class InstructorGradeReport extends Cubit<InstructorGradeReportState> {
 
       if (user != null) {
         Map<String, List<AssignmentGradeReport>> gradeReport = {};
-        final List<String> assignmentNames = await repo.getAllAssignmentNames(user.id);
+        final List<String> assignmentNames =
+            await repo.getAllAssignmentNames(user.id);
 
         for (int i = 0; i < assignmentNames.length; ++i) {
           gradeReport[assignmentNames[i]] =
