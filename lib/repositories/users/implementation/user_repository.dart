@@ -9,8 +9,10 @@ import 'package:project3_ui/url.dart';
 class OnlineUserRepository implements UserRepository {
   @override
   Future<List<User>> getAllUsers(int curId) async {
-    var response = await http.get((Uri.parse('$serverURL/users')),
-        headers: {"Authorization": '${curId.toString()},'});
+    var response = await http.get((Uri.parse('$serverURL/users')), headers: {
+      "Authorization": '${curId.toString()},',
+      'Accept': 'application/json'
+    });
 
     // test JsonString
     //String jsonString =
@@ -24,7 +26,10 @@ class OnlineUserRepository implements UserRepository {
   @override
   Future<bool> createUser(int curId, String username, String role) async {
     var response = await http.post((Uri.parse('$serverURL/users')),
-        headers: {"Authorization": '${curId.toString()},'},
+        headers: {
+          'Authorization': '${curId.toString()},',
+          'Content-type': 'application/json',
+        },
         body: "{'name': $username, 'role': $role}");
 
     if (response.statusCode == 201) {
