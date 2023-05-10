@@ -18,6 +18,7 @@ class LiveLoginRepository implements LoginRepository {
             'Accept': 'application/json'
           });
       // In this case the login was successful
+      print(response.statusCode);
       if (response.statusCode == 201) {
         return User.fromJson(json.decode(response.body));
       }
