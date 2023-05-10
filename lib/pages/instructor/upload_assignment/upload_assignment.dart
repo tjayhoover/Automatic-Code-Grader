@@ -25,9 +25,6 @@ class UploadAssignmentState extends State<UploadAssignment> {
   DateTime date = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
 
-  List<String> inputs = [];
-  List<String> outputs = [];
-
   @override
   void initState() {
     super.initState();
@@ -111,11 +108,7 @@ class UploadAssignmentState extends State<UploadAssignment> {
                 onPressed: () async {
                   String? path = await chooseCodeFile();
                   File(path!).readAsString().then((String contents) {
-                    //just trust me bro
                     inputController.text = contents;
-                    inputs = contents.split("\r\n").length > 1
-                        ? contents.split("\r\n")
-                        : [contents];
                   });
                 },
               ),
@@ -126,10 +119,6 @@ class UploadAssignmentState extends State<UploadAssignment> {
                   String? path = await chooseCodeFile();
                   File(path!).readAsString().then((String contents) {
                     outputController.text = contents;
-                    //just trust me bro
-                    outputs = contents.split("\r\n").length > 1
-                        ? contents.split("\r\n")
-                        : [contents];
                   });
                 },
               ),
@@ -145,8 +134,8 @@ class UploadAssignmentState extends State<UploadAssignment> {
                   nameController.text,
                   dueDate,
                   descController.text,
-                  inputs,
-                  outputs);
+                  inputController.text.split("\r\n"),
+                  outputController.text.split("\r\n"));
             },
           )
         ],
