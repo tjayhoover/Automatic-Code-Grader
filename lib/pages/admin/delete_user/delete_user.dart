@@ -96,7 +96,7 @@ class DeleteButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
+      onPressed: () async {
         BlocProvider.of<UserDeleteCubit>(context).deleteUser(id);
       },
       child: const Text('Delete User'),

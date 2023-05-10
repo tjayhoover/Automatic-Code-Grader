@@ -99,7 +99,7 @@ class Main extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   BlocProvider.of<UserCreateCubit>(context)
                       .createUser(username.text, role.text);
                 },
