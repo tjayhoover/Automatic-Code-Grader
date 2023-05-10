@@ -27,7 +27,6 @@ class HttpAssignmentRepo implements AssignmentRepository {
       }
     } catch (e) {
       // debug output
-      print(e);
       return List.empty();
     }
   }
@@ -42,7 +41,6 @@ class HttpAssignmentRepo implements AssignmentRepository {
       List<String> inputs, List<String> outputs, int id) async {
     Assignment a = Assignment(name, dueDate, desc);
 
-    print("posting assignments");
     try {
       var response = await http.post((Uri.parse('$serverURL/assignments')),
           body: jsonEncode(a.toJson()),
@@ -51,8 +49,6 @@ class HttpAssignmentRepo implements AssignmentRepository {
             'Accept': 'application/json',
             'Authorization': '$id,'
           });
-      print("Cooper response");
-      print(response.statusCode.toString());
       if (response.statusCode == 201) {
         final Assignment body = Assignment.fromJson(json.decode(response.body));
         return body;
@@ -60,7 +56,6 @@ class HttpAssignmentRepo implements AssignmentRepository {
         throw Exception("Could not post assignment");
       }
     } catch (e) {
-      print(e);
       rethrow;
     }
   }

@@ -14,8 +14,6 @@ class HTTPSubmissionRepo implements SubmissionRepository {
       final File file = File('../temp.py');
       await file.writeAsString(code);
 
-      print(file.path);
-
       // Create the request
       var uri =
           Uri.parse('$serverURL/assignments/${assignmentID.toString()}/submit');
@@ -35,7 +33,6 @@ class HTTPSubmissionRepo implements SubmissionRepository {
       // Send the request
       var response = await request.send();
 
-      print("Submission response code: ${response.statusCode}");
 
       // Success
       if (response.statusCode == 201) {
@@ -44,11 +41,7 @@ class HTTPSubmissionRepo implements SubmissionRepository {
 
         // Decode it to a Grade Report object
         final Map<String, dynamic> parsed = json.decode(respStr);
-        print("cases passed:");
-        print(parsed["casesPassed"]);
 
-        print("total Cases");
-        print(parsed["totalCases"]);
 
         final AssignmentGradeReport gr = AssignmentGradeReport.fromJson(parsed);
         return [gr.casesPassed, gr.totalCases];
@@ -60,7 +53,6 @@ class HTTPSubmissionRepo implements SubmissionRepository {
       }
     } catch (e) {
       // Debug output
-      print(e);
       return [];
     }
   }

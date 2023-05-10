@@ -14,7 +14,6 @@ class HTTPInstructorGradeReportRepository
     // a list of all assignments. Then we must find the correct one that matches
     // with our assignment name, and make a second request for its grade report.
     var assignmentResponse = await http.get(Uri.parse('$serverURL/assignments'),
-        // TODO: Does the server require authorization to GET the assignment list?
         headers: {
           "Authorization": '${curId.toString()},',
           "Accept": "application/json,"
@@ -34,8 +33,6 @@ class HTTPInstructorGradeReportRepository
 
       var gradeResponse = await http.get(
           Uri.parse('$serverURL/assignments/$targetID/report'),
-          // TODO: We almost definitely need authorization for this endpoint,
-          // right? So, how do we gain access to the current user from here?
           headers: {
             "Authorization": '${curId.toString()},',
             "Accept": "application/json,"
