@@ -7,6 +7,7 @@ import 'package:project3_ui/cubits/grade_reports/student_grade_report_cubit.dart
 import 'package:project3_ui/cubits/login/login_cubit.dart';
 import 'package:project3_ui/cubits/users/users_cubit.dart';
 import 'package:project3_ui/repositories/assignments/implementation/http_assignment_repository.dart';
+import 'package:project3_ui/repositories/instructor_grade_reports/implementation/http_instructor_grade_report_repo_implementation.dart';
 import 'package:project3_ui/repositories/login/implementation/http_login_repo.dart';
 import 'package:project3_ui/repositories/login/interface/login_repository.dart';
 import 'package:project3_ui/repositories/assignments/interface/assignment_repository.dart';
@@ -28,7 +29,7 @@ void main() async {
   GetIt.I.registerSingleton<LoginRepository>(LiveLoginRepository());
   GetIt.I.registerSingleton<SubmissionRepository>(HTTPSubmissionRepo());
   GetIt.I.registerSingleton<InstructorGradeReportRepository>(
-      InstructorGradeReportRepositoryMock());
+      HTTPInstructorGradeReportRepository());
 
   runApp(MultiBlocProvider(
     providers: [
