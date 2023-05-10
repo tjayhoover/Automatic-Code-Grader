@@ -25,8 +25,8 @@ class UploadAssignmentState extends State<UploadAssignment> {
   DateTime date = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
 
-  late List<File> inputs;
-  late List<File> outputs;
+  late List<String> inputs;
+  late List<String> outputs;
 
   @override
   void initState() {
@@ -38,24 +38,10 @@ class UploadAssignmentState extends State<UploadAssignment> {
     super.dispose();
   }
 
-  void chooseInputs() async {
-    inputs = [];
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.custom, allowMultiple: true, allowedExtensions: ['txt']);
-    for (var f in result!.files) {
-      var curFile = f.bytes;
-      inputs.add(File.fromRawPath(curFile!));
-    }
-  }
-
-  void chooseOutputs() async {
-    outputs = [];
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.custom, allowMultiple: true, allowedExtensions: ['txt']);
-    for (var f in result!.files) {
-      var curFile = f.bytes;
-      outputs.add(File.fromRawPath(curFile!));
-    }
+  Future<String?> chooseCodeFile() async {
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(allowMultiple: false);
+    return result?.paths.first;
   }
 
   Widget buildTextFields(BuildContext context) {
@@ -83,17 +69,62 @@ class UploadAssignmentState extends State<UploadAssignment> {
           ),
           Row(
             children: [
+              Container(
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.tealAccent)),
+                child: SizedBox(
+                  width: 300,
+                  height: 150,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: TextField(
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      controller: inputController,
+                    ),
+                  ),
+                ),
+              ),
+              const Spacer(),
+              Container(
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.tealAccent)),
+                child: SizedBox(
+                  width: 300,
+                  height: 150,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: TextField(
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      controller: outputController,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+          Row(
+            children: [
               ElevatedButton(
                 child: const Text("Upload input file"),
-                onPressed: () {
-                  chooseInputs();
+                onPressed: () async {
+                  String? path = await chooseCodeFile();
+                  File(path!).readAsString().then((String contents) {
+                    inputController.text = contents;
+                    inputs = contents.split("\n");
+                  });
                 },
               ),
               const Spacer(),
               ElevatedButton(
                 child: const Text("Upload output file"),
-                onPressed: () {
-                  chooseOutputs();
+                onPressed: () async {
+                  String? path = await chooseCodeFile();
+                  File(path!).readAsString().then((String contents) {
+                    outputController.text = contents;
+                    outputs = contents.split("\n");
+                  });
                 },
               ),
             ],

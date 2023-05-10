@@ -35,9 +35,8 @@ class MockAssignmentRepository implements AssignmentRepository {
 
   @override
   Future<Assignment> postAssignment(String name, String desc, DateTime dueDate,
-      List<File> inputs, List<File> outputs) async {
+      List<String> inputs, List<String> outputs, int id) async {
     await Future.delayed(const Duration(seconds: 1));
-    return Assignment(
-        id: 1, name, dueDate, desc, inputs: inputs, outputs: outputs);
+    return Assignment(id: 1, name, dueDate, desc);
   }
 }
