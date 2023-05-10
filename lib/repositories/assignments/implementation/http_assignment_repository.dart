@@ -60,9 +60,13 @@ class HttpAssignmentRepo implements AssignmentRepository {
           'outputFiles', await outputs[0].readAsBytes()));
       request.headers['Authorization'] = '$id,';
       request.headers['Content-Type'] = 'application/json';
-      request.send().then((response) {
+      request.headers['Accept'] = 'application/json';
+      request.send().then((response) async {
         if (response.statusCode == 201) {
-          return a;
+          var responseStream = await http.Response.fromStream(response);
+          final Assignment body =
+              Assignment.fromJson(json.decode(responseStream.body));
+          return body;
         } else {
           throw Exception("Could not post assignment");
         }
