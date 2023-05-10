@@ -76,8 +76,7 @@ class LogInPage extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => const StudentHome()),
                   );
-                } else if (state.loggedInUser.role.toLowerCase() ==
-                    "instructor") {
+                } else if (state.loggedInUser.role.toLowerCase() == "teacher") {
                   Navigator.push(
                     context,
                     MaterialPageRoute(

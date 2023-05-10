@@ -25,9 +25,6 @@ class UploadAssignmentState extends State<UploadAssignment> {
   DateTime date = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
 
-  late List<String> inputs;
-  late List<String> outputs;
-
   @override
   void initState() {
     super.initState();
@@ -112,7 +109,6 @@ class UploadAssignmentState extends State<UploadAssignment> {
                   String? path = await chooseCodeFile();
                   File(path!).readAsString().then((String contents) {
                     inputController.text = contents;
-                    inputs = contents.split("\n");
                   });
                 },
               ),
@@ -123,7 +119,6 @@ class UploadAssignmentState extends State<UploadAssignment> {
                   String? path = await chooseCodeFile();
                   File(path!).readAsString().then((String contents) {
                     outputController.text = contents;
-                    outputs = contents.split("\n");
                   });
                 },
               ),
@@ -134,12 +129,13 @@ class UploadAssignmentState extends State<UploadAssignment> {
             onPressed: () {
               DateTime dueDate = DateTime(
                   date.year, date.month, date.day, time.hour, time.minute);
+
               BlocProvider.of<UploadAssignmentCubit>(context).uploadAssignment(
                   nameController.text,
                   dueDate,
                   descController.text,
-                  inputs,
-                  outputs);
+                  inputController.text.split("\r\n"),
+                  outputController.text.split("\r\n"));
             },
           )
         ],

@@ -1,14 +1,10 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
-import 'package:get_it/get_it.dart';
 import 'package:project3_ui/url.dart';
 import 'package:project3_ui/entities/assignment.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-
 import 'package:project3_ui/repositories/assignments/interface/assignment_repository.dart';
-import 'package:project3_ui/repositories/login/implementation/http_login_repo.dart';
 
 class HttpAssignmentRepo implements AssignmentRepository {
   @override
@@ -31,7 +27,6 @@ class HttpAssignmentRepo implements AssignmentRepository {
       }
     } catch (e) {
       // debug output
-      print(e);
       return List.empty();
     }
   }
@@ -44,10 +39,11 @@ class HttpAssignmentRepo implements AssignmentRepository {
   @override
   Future<Assignment> postAssignment(String name, String desc, DateTime dueDate,
       List<String> inputs, List<String> outputs, int id) async {
-    Assignment a = Assignment(name, dueDate, desc);
-    var client = http.Client();
+    Assignment a =
+        Assignment(name, dueDate, desc, inputs: inputs, outputs: outputs);
+
     try {
-      var response = await http.post((Uri.parse('$serverURL/login')),
+      var response = await http.post((Uri.parse('$serverURL/assignments')),
           body: jsonEncode(a.toJson()),
           headers: {
             'Content-type': 'application/json',
@@ -62,8 +58,6 @@ class HttpAssignmentRepo implements AssignmentRepository {
       }
     } catch (e) {
       rethrow;
-    } finally {
-      client.close();
     }
   }
 }

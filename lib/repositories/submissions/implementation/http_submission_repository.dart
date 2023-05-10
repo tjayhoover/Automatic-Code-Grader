@@ -1,8 +1,8 @@
+import 'package:project3_ui/entities/assignment_grade_report.dart';
 import 'package:project3_ui/repositories/submissions/interface/submission_repository.dart';
 import 'package:project3_ui/url.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
-import 'package:project3_ui/entities/grade_report.dart';
 import 'dart:convert';
 
 class HTTPSubmissionRepo implements SubmissionRepository {
@@ -15,20 +15,24 @@ class HTTPSubmissionRepo implements SubmissionRepository {
       await file.writeAsString(code);
 
       // Create the request
-      var uri = Uri.https(
-          '$serverURL/assignments/${assignmentID.toString()}/submit', 'create');
+      var uri =
+          Uri.parse('$serverURL/assignments/${assignmentID.toString()}/submit');
+
       var request = http.MultipartRequest('POST', uri);
 
       // Fill out the headers with the right info
-      request.headers["Authorization"] = '${studentID.toString()},';
-      request.headers["Accept"] = 'application/json';
+      request.headers['Authorization'] = '${studentID.toString()},';
+      request.headers['Accept'] = 'application/json';
+      request.headers['Content-type'] = 'application/json';
+      
 
       // Add the code file
-      request.files
-          .add(await http.MultipartFile.fromPath('package', file.path));
+
+      request.files.add(await http.MultipartFile.fromPath('file', file.path));
 
       // Send the request
       var response = await request.send();
+
 
       // Success
       if (response.statusCode == 201) {
@@ -37,7 +41,9 @@ class HTTPSubmissionRepo implements SubmissionRepository {
 
         // Decode it to a Grade Report object
         final Map<String, dynamic> parsed = json.decode(respStr);
-        final GradeReport gr = GradeReport.fromJson(parsed);
+
+
+        final AssignmentGradeReport gr = AssignmentGradeReport.fromJson(parsed);
         return [gr.casesPassed, gr.totalCases];
       }
 
@@ -47,7 +53,6 @@ class HTTPSubmissionRepo implements SubmissionRepository {
       }
     } catch (e) {
       // Debug output
-      print(e);
       return [];
     }
   }

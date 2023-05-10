@@ -16,6 +16,7 @@ class HttpSgrRepo implements StudentGradeReportRepository {
 
       if (response.statusCode == 200) {
         // Decode the json, turn it into a list of assignments, and return it
+
         return (json.decode(response.body) as List)
             .map((i) => GradeReport.fromJson(i))
             .toList();
@@ -23,7 +24,6 @@ class HttpSgrRepo implements StudentGradeReportRepository {
         throw Exception("Could not get grade reports");
       }
     } catch (e) {
-      print(e);
       return [];
     }
   }
