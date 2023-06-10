@@ -6,4 +6,4 @@ Note: This is the User Interface for the Automatic Code Grader. To actually run 
 entirety, the backend server must be running and hooked up to an instance of Memgraph.
 
 I did not write all this code myself. The other contributors were Brandon Bauer, Adam Rilatt, Cooper Vohs,
-and Conor Pettis-Yarnall, who were my teammates. @tjayhoover
+and Conor Pettis-Yarnall, who were my teammates.
