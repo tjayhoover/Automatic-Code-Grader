@@ -1,16 +1,9 @@
-# project3_ui
+# Automatic Code Grader
 
-A new Flutter project.
+This is the third and final project for my software architecture class at Lebanon Valley College.
 
-## Getting Started
+Note: This is the User Interface for the Automatic Code Grader. To actually run the project in its 
+entirety, the backend server must be running and hooked up to an instance of Memgraph.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+I did not write all this code myself. The other contributors were Brandon Bauer, Adam Rilatt, Cooper Vohs,
+and Conor Pettis-Yarnall, who were my teammates. @tjayhoover
