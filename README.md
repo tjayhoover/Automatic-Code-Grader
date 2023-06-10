@@ -11,7 +11,7 @@ looks best on a desktop web browser. The app allows three types of users to log 
 2. Instructors can log in to upload new assignments or view the grades of students who have already submitted.
 3. Admins can log in to add and remove users.
 
-Note: This is the User Interface for the Automatic Code Grader. To actually run the project in its 
+Note: This is only the user interface for the Automatic Code Grader. To actually run the project in its 
 entirety, the backend server must be running and hooked up to an instance of Memgraph. I did not
 contribute to the backend code.
 
