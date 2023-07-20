@@ -1,6 +1,6 @@
 {
     "cmake.configureOnOpen": false,
-    "cmake.sourceDirectory": "C:/Users/tjayh/Desktop/project-3-project-3-ui/windows",
+    "cmake.sourceDirectory": "C:/Users/tjayh/Desktop/Architecture Projects/project-3-project-3-ui/linux",
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
     "githubPullRequests.ignoredPullRequestBranches": [
         "main"
